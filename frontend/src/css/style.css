@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #f4f7fb;
+  color: #152536;
+}
+
+header {
+  background: linear-gradient(135deg, #0a2b3e, #1e5a88);
+  color: white;
+  padding: 25px;
+  text-align: center;
+}
+
+main {
+  width: 94%;
+  margin: 25px auto;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.kpi-card, .card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  margin-bottom: 20px;
+}
+
+.kpi-card h2 {
+  color: #0a2b3e;
+  font-size: 28px;
+  margin: 0;
+}
+
+.kpi-card p {
+  color: #607086;
+  margin: 6px 0 0;
+}
