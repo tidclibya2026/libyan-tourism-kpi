@@ -1,0 +1,39 @@
+{
+  "year": 2025,
+  "country": "Libya",
+  "system": "National Tourism KPI Platform",
+  "international_tourists": 2752,
+  "tourism_trips": 489,
+  "hotel_guests": 373843,
+  "hotels": 384,
+  "hotel_apartments": 258,
+  "hotels_and_apartments": 642,
+  "tourist_villages": 134,
+  "chalets": 1980,
+  "hotel_rooms": 21821,
+  "hotel_beds": 75606,
+  "tourism_companies": 2556,
+  "renewed_companies": 302,
+  "handicrafts": 1286,
+  "restaurants_cafes": 3300,
+  "flights": 30736,
+  "air_passengers": 3089211,
+  "heritage_visitors": 374500,
+  "summer_revenue_lyd": 1250797500,
+  "continents": {
+    "Europe": 1243,
+    "Asia": 611,
+    "Africa": 571,
+    "Americas": 293,
+    "Australia": 34
+  },
+  "tripoli": {
+    "companies": 1587,
+    "offices": 75,
+    "accommodation_total": 212,
+    "hotels": 175,
+    "hotel_apartments": 35,
+    "tourist_villages": 2,
+    "hotel_guests": 208758
+  }
+}
