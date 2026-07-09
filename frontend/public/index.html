@@ -3,30 +3,118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>منصة المؤشرات السياحية الليبية</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="../src/css/style.css" />
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
+
 <body>
-  <header>
-    <h1>منصة المؤشرات السياحية الليبية</h1>
-    <p>Libyan Tourism KPI Platform</p>
+  <header class="main-header">
+    <div>
+      <h1>منصة المؤشرات السياحية الليبية</h1>
+      <p>Libyan Tourism KPI Platform</p>
+    </div>
+    <div class="header-badge">2025</div>
   </header>
 
-  <main>
+  <main class="container">
+
+    <section class="section-title">
+      <h2>المؤشرات الوطنية الرئيسية</h2>
+      <p>لوحة مؤشرات مبنية على بيانات 2025 وربطها بمنهجية المؤشرات السياحية الدولية.</p>
+    </section>
+
     <section class="kpi-grid" id="kpiGrid"></section>
 
-    <section class="card">
-      <h2>توزيع السواح حسب القارات</h2>
-      <canvas id="continentsChart"></canvas>
+    <section class="dashboard-grid">
+      <div class="card">
+        <h2>توزيع السواح الدوليين حسب القارات</h2>
+        <p class="card-note">تحليل الأسواق السياحية الوافدة إلى ليبيا حسب القارة.</p>
+        <canvas id="continentsChart"></canvas>
+      </div>
+
+      <div class="card">
+        <h2>تنبؤات 2035</h2>
+        <p class="card-note">نموذج تنبؤ أولي باستخدام معدل نمو مركب للمؤشرات الرئيسية.</p>
+        <div id="forecastBox"></div>
+      </div>
     </section>
 
     <section class="card">
-      <h2>تنبؤات 2035</h2>
-      <div id="forecastBox"></div>
+      <h2>خريطة المدن السياحية</h2>
+      <p class="card-note">
+        خريطة GIS تفاعلية توضح توزيع النزلاء حسب المدن والفروع السياحية.
+      </p>
+
+      <div class="map-toolbar">
+        <button class="map-btn" data-layer="all">كل المدن</button>
+        <button class="map-btn" data-layer="major">مدن رئيسية</button>
+        <button class="map-btn" data-layer="medium">نشاط متوسط</button>
+        <button class="map-btn" data-layer="limited">نشاط محدود</button>
+      </div>
+
+      <div id="tourismMap"></div>
     </section>
+
+    <section class="card">
+      <h2>لوحة المدن السياحية</h2>
+      <p class="card-note">
+        توزيع أعداد النزلاء في مرافق الإيواء السياحي حسب الفروع والجنسيات.
+      </p>
+
+      <div class="table-wrap">
+        <table id="citiesTable">
+          <thead>
+            <tr>
+              <th>المدينة / الفرع</th>
+              <th>ليبيون</th>
+              <th>عرب</th>
+              <th>أجانب</th>
+              <th>الإجمالي</th>
+              <th>الحصة من الإجمالي</th>
+              <th>نسبة الليبيين</th>
+              <th>نسبة العرب</th>
+              <th>نسبة الأجانب</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>ترتيب المدن حسب عدد النزلاء</h2>
+      <p class="card-note">
+        يظهر الرسم ترتيب المدن السياحية حسب إجمالي النزلاء في مرافق الإيواء.
+      </p>
+      <canvas id="citiesChart"></canvas>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="card">
+        <h2>تحليل جنسيات النزلاء وطنياً</h2>
+        <canvas id="nationalityChart"></canvas>
+      </div>
+
+      <div class="card">
+        <h2>مؤشرات مدينة طرابلس</h2>
+        <div id="tripoliBox"></div>
+        <canvas id="tripoliAccommodationChart"></canvas>
+      </div>
+    </section>
+
   </main>
 
+  <footer>
+    مركز المعلومات والتوثيق السياحي – وزارة السياحة والصناعات التقليدية
+  </footer>
+
   <script src="../src/js/app.js"></script>
+  <script src="../src/js/map.js"></script>
 </body>
 </html>

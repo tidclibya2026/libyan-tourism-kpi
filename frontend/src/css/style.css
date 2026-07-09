@@ -4,6 +4,7 @@
   --accent: #d4af37;
   --success: #2c7a4d;
   --danger: #c0392b;
+  --warning: #e67e22;
   --bg: #f4f7fb;
   --card: #ffffff;
   --text: #162636;
@@ -221,6 +222,96 @@ tbody tr:hover td {
   margin-top: 3px;
 }
 
+/* GIS MAP */
+
+#tourismMap {
+  width: 100%;
+  height: 560px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+.map-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.map-btn {
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--primary);
+  padding: 9px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.map-btn:hover,
+.map-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+.city-popup {
+  min-width: 230px;
+  direction: rtl;
+  text-align: right;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+.city-popup h3 {
+  margin: 0 0 8px;
+  color: var(--primary);
+}
+
+.city-popup p {
+  margin: 4px 0;
+}
+
+.city-popup .popup-kpi {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.city-popup .popup-kpi div {
+  background: #f4f7fb;
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.city-popup .popup-kpi strong {
+  display: block;
+  color: var(--secondary);
+}
+
+.legend {
+  background: white;
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  line-height: 1.6;
+  direction: rtl;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
 .error-banner {
   background: #ffe1e1;
   color: #8a1f1f;
@@ -249,5 +340,9 @@ footer {
 
   .main-header h1 {
     font-size: 24px;
+  }
+
+  #tourismMap {
+    height: 430px;
   }
 }
