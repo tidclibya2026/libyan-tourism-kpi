@@ -1,43 +1,253 @@
+:root {
+  --primary: #0a2b3e;
+  --secondary: #1e5a88;
+  --accent: #d4af37;
+  --success: #2c7a4d;
+  --danger: #c0392b;
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --text: #162636;
+  --muted: #607086;
+  --border: #e5eaf2;
+  --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Tahoma, Arial, sans-serif;
-  background: #f4f7fb;
-  color: #152536;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
 }
 
-header {
-  background: linear-gradient(135deg, #0a2b3e, #1e5a88);
+.main-header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: white;
-  padding: 25px;
-  text-align: center;
+  padding: 28px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow);
 }
 
-main {
+.main-header h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.main-header p {
+  margin: 6px 0 0;
+  opacity: 0.9;
+}
+
+.header-badge {
+  background: var(--accent);
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 999px;
+}
+
+.container {
   width: 94%;
-  margin: 25px auto;
+  margin: 28px auto;
 }
 
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 16px;
-}
-
-.kpi-card, .card {
-  background: white;
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+.section-title {
   margin-bottom: 20px;
 }
 
-.kpi-card h2 {
-  color: #0a2b3e;
-  font-size: 28px;
+.section-title h2 {
   margin: 0;
+  color: var(--primary);
+  font-size: 26px;
+}
+
+.section-title p {
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
+.kpi-grid,
+.dashboard-grid,
+.mini-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.kpi-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  margin-bottom: 24px;
+}
+
+.dashboard-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mini-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.kpi-card,
+.card,
+.mini-kpi {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.kpi-card {
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: -30px;
+  inset-block-end: -30px;
+  width: 80px;
+  height: 80px;
+  background: rgba(212, 175, 55, 0.12);
+  border-radius: 50%;
+}
+
+.kpi-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.kpi-card h2 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 30px;
+  font-weight: 900;
 }
 
 .kpi-card p {
-  color: #607086;
   margin: 6px 0 0;
+  color: var(--text);
+  font-weight: bold;
+}
+
+.kpi-card small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+}
+
+.card {
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.card h2 {
+  margin: 0 0 6px;
+  color: var(--primary);
+  font-size: 22px;
+}
+
+.card-note {
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+.mini-kpi {
+  padding: 16px;
+  text-align: center;
+  box-shadow: none;
+}
+
+.mini-kpi h3 {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 24px;
+}
+
+.mini-kpi p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+canvas {
+  max-width: 100%;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  min-width: 900px;
+}
+
+thead th {
+  background: var(--primary);
+  color: white;
+  padding: 13px 14px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+tbody tr:hover td {
+  background: #f8fafc;
+}
+
+.table-subtitle {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.error-banner {
+  background: #ffe1e1;
+  color: #8a1f1f;
+  border-bottom: 1px solid #f5b5b5;
+  padding: 14px 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 28px;
+  margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .main-header h1 {
+    font-size: 24px;
+  }
 }

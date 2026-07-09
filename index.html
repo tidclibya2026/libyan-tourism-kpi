@@ -1,497 +1,100 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>ليبيا السياحية | لوحة القيادة الاستراتيجية 2026 – تحليلات متقدمة لرضا السواح</title>
-<meta name="description" content="لوحة متكاملة بجميع مؤشرات السياحة في ليبيا مع تحليلات UNWTO ورسوم بيانية تفاعلية وخريطة متطورة وتحليل ذكاء اصطناعي لرضا السواح">
-<meta name="theme-color" content="#0b2b44">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Fonts & Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>منصة المؤشرات السياحية الليبية</title>
 
-<!-- Chart.js & jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --primary: #0a2b3e;
-    --secondary: #1e5a88;
-    --accent: #d4af37;
-    --bg-light: #f4f7fc;
-    --card-bg: #ffffff;
-    --text-dark: #1a2c3e;
-    --text-muted: #4a627a;
-    --border-light: #e2e8f0;
-    --success: #2c7a4d;
-    --danger: #c0392b;
-    --warning: #e67e22;
-    --shadow-sm: 0 8px 20px rgba(0,0,0,0.05);
-    --shadow-md: 0 12px 30px rgba(0,0,0,0.08);
-    --radius: 1rem;
-  }
-  .high-contrast {
-    --primary: #000000;
-    --secondary: #1e1e1e;
-    --accent: #ffd966;
-    --bg-light: #ffffff;
-    --card-bg: #fefefe;
-    --text-dark: #000000;
-    --text-muted: #2c2c2c;
-    --border-light: #333333;
-  }
-  body { font-family: 'Tajawal', sans-serif; background: var(--bg-light); color: var(--text-dark); transition: all 0.2s ease; }
-  .progress-bar { position: fixed; top: 0; left: 0; height: 4px; width: 0%; background: var(--accent); z-index: 9999; transition: width 0.3s ease; }
-  .sidebar {
-    position: fixed; right: 0; top: 0; width: 280px; height: 100%;
-    background: var(--primary); color: white; padding: 1.8rem 1rem;
-    overflow-y: auto; z-index: 1050; transition: transform 0.3s ease;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-  }
-  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1rem; }
-  .brand .logo { background: var(--accent); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.6rem; color: var(--primary); animation: pulse 2s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); } 70% { box-shadow: 0 0 0 10px rgba(212,175,55,0); } 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); } }
-  .brand h2 { font-size: 1.2rem; line-height: 1.3; }
-  .brand small { font-size: 0.7rem; opacity: 0.8; display: block; }
-  .nav { display: flex; flex-direction: column; gap: 0.5rem; }
-  .nav a { color: #f0f0f0; text-decoration: none; padding: 0.7rem 1rem; border-radius: 12px; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500; }
-  .nav a i { width: 24px; text-align: center; transition: transform 0.2s; }
-  .nav a:hover i { transform: translateX(-3px); }
-  .nav a:hover, .nav a.active { background: rgba(255,255,255,0.15); transform: translateX(-5px); }
-  .main { margin-right: 280px; padding: 1.5rem; transition: margin 0.3s; }
-  .menu-toggle { display: none; position: fixed; top: 1rem; right: 1rem; z-index: 1100; background: var(--primary); color: white; border: none; border-radius: 12px; width: 48px; height: 48px; font-size: 1.4rem; cursor: pointer; }
-  .dashboard-header { background: var(--card-bg); border-radius: var(--radius); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1.8rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); }
-  .btn-group { display: flex; gap: 0.7rem; flex-wrap: wrap; }
-  .btn { background: white; border: 1px solid var(--border-light); padding: 0.5rem 1rem; border-radius: 2rem; cursor: pointer; transition: 0.2s; font-weight: 500; }
-  .btn:hover { background: var(--secondary); color: white; border-color: var(--secondary); transform: translateY(-2px); }
-  .card { background: var(--card-bg); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.8rem; box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); transition: transform 0.2s, box-shadow 0.2s; }
-  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-  .section-title { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; margin-bottom: 1.2rem; font-weight: 800; color: var(--primary); border-right: 4px solid var(--accent); padding-right: 12px; }
-  .section-title i { color: var(--accent); font-size: 1.4rem; }
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 1.2rem; margin-bottom: 1rem; }
-  .kpi-card { background: linear-gradient(145deg, var(--card-bg), #fafcff); padding: 1rem; border-radius: 1.2rem; text-align: center; border: 1px solid var(--border-light); transition: all 0.2s; }
-  .kpi-card:hover { transform: scale(1.02); border-color: var(--accent); }
-  .kpi-card i { font-size: 1.8rem; color: var(--accent); }
-  .kpi-card h2 { font-size: 1.6rem; margin: 0.5rem 0; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .kpi-card p { color: var(--text-muted); font-weight: 500; font-size: 0.85rem; }
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: 1rem; }
-  .stat-item { background: var(--card-bg); border-radius: 1rem; padding: 1rem; border: 1px solid var(--border-light); transition: all 0.2s; }
-  .stat-item:hover { background: linear-gradient(145deg, #fff, #fafcff); border-color: var(--accent); }
-  .stat-title { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
-  .stat-value { font-size: 1.5rem; font-weight: 800; line-height: 1.2; color: var(--primary); }
-  .table-responsive { overflow-x: auto; border-radius: 1rem; margin-top: 1rem; }
-  .data-table { width: 100%; border-collapse: collapse; background: var(--card-bg); }
-  .data-table th, .data-table td { padding: 12px 16px; text-align: right; border-bottom: 1px solid var(--border-light); }
-  .data-table th { background: var(--primary); color: white; font-weight: 700; }
-  .data-table tr:hover td { background: rgba(212,175,55,0.05); }
-  .scenario-buttons { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .scenario-btn { padding: 0.5rem 1.2rem; border: none; border-radius: 2rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
-  .scenario-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
-  .worst { background: #c0392b; color: white; }
-  .base { background: var(--accent); color: #1e2a3a; }
-  .best { background: #2c7a4d; color: white; }
-  .decision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-  .decision-card-expanded { background: var(--card-bg); border-radius: 1rem; border: 1px solid var(--border-light); overflow: hidden; transition: all 0.2s; box-shadow: var(--shadow-sm); }
-  .decision-card-expanded:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-  .decision-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 1rem; color: white; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-  .decision-header h3 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-  .decision-value-large { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
-  .decision-body { padding: 1rem; display: none; border-top: 1px solid var(--border-light); background: var(--card-bg); }
-  .decision-body.open { display: block; }
-  .decision-body p { margin-bottom: 0.8rem; line-height: 1.6; }
-  .insight { background: #fef9e6; border-right: 3px solid var(--accent); padding: 0.6rem; margin-top: 0.5rem; border-radius: 8px; }
-  .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
-  .dashboard-card { background: var(--card-bg); border-radius: 1.5rem; padding: 1rem; border: 1px solid var(--border-light); transition: all 0.2s; }
-  .dashboard-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
-  .card-header-dash { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; border-right: 3px solid var(--accent); padding-right: 10px; }
-  .wordcloud-stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
-  .word-badge { background: #f1f3f5; padding: 4px 12px; border-radius: 40px; font-weight: 600; font-size: 0.8rem; border: 1px solid #d4af6a; transition: 0.2s; }
-  .word-badge:hover { transform: scale(1.05); background: var(--accent); color: white; }
-  .flex-stats { display: flex; justify-content: space-between; margin-top: 8px; }
-  .highlight-text { color: var(--success); }
-  .warning-text { color: var(--warning); }
-  .danger-text { color: var(--danger); }
-  .chart-container { position: relative; height: 260px; width: 100%; }
-  .back-to-top { position: fixed; bottom: 20px; left: 20px; background: var(--primary); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; opacity: 0; visibility: hidden; transition: 0.2s; z-index: 1000; }
-  .back-to-top.active { opacity: 1; visibility: visible; }
-  .back-to-top:hover { transform: scale(1.1); background: var(--accent); color: var(--primary); }
-  .map-container { background: #ffffff; border-radius: 1rem; padding: 0.5rem; box-shadow: var(--shadow-sm); overflow-x: auto; direction: ltr; }
-  .map-iframe { width: 100%; height: 550px; border: none; border-radius: 0.75rem; display: block; background: #fff; }
-  .progress-bar-sm { background-color: #e9ecef; border-radius: 20px; height: 24px; overflow: hidden; margin: 8px 0; }
-  .progress-fill-sm { background-color: var(--accent); height: 100%; width: 0%; border-radius: 20px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: var(--primary); font-weight: bold; font-size: 0.8rem; }
-  .country-sentiment { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-  .country-flag { font-size: 1.4rem; min-width: 50px; }
-  @media (max-width: 992px) { .sidebar { transform: translateX(100%); right: 0; } .sidebar.active { transform: translateX(0); } .main { margin-right: 0; } .menu-toggle { display: block; } .map-iframe { height: 400px; } }
-  .tab-content { display: none; animation: fade 0.3s ease; }
-  .tab-content.active { display: block; }
-  @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  .small-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; text-align: center; }
-  .highlight-box { background: #fef8e7; border-radius: 1rem; padding: 0.8rem; border-right: 4px solid var(--accent); margin-top: 1rem; }
-  .deep-analysis { background: #fef9e6; border-radius: 1.5rem; padding: 1.5rem; margin-top: 1.5rem; border: 1px solid var(--border-light); }
-  .minister-quote { background: linear-gradient(135deg, #1e3c2c, #0f2b1c); color: white; padding: 1.8rem; border-radius: 1.5rem; margin-top: 1.5rem; text-align: center; }
-  .minister-quote h3 { font-size: 1.6rem; margin: 0.5rem 0; color: var(--accent); }
-  .insight-box { background: #fef0d9; padding: 0.8rem; border-radius: 12px; border-right: 4px solid var(--warning); margin: 1rem 0; font-weight: 500; }
-</style>
+  <link rel="stylesheet" href="../src/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-
-<div class="progress-bar"></div>
-<button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-
-<aside class="sidebar" id="sidebar">
-  <div class="brand"><div class="logo">🇱🇾</div><h2>لوحة المؤشرات السياحية<br><small>وزارة السياحة والصناعات التقليدية – مركز المعلومات والتوثيق السياحي</small></h2></div>
-  <nav class="nav">
-    <a href="#" data-tab="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> لوحة المعلومات</a>
-    <a href="#" data-tab="indicators"><i class="fas fa-chart-pie"></i> المؤشرات الرئيسية</a>
-    <a href="#" data-tab="analysis"><i class="fas fa-chart-bar"></i> التحليلات البيانية</a>
-    <a href="#" data-tab="comparison"><i class="fas fa-balance-scale"></i> المقارنات</a>
-    <a href="#" data-tab="nationalReport"><i class="fas fa-smile"></i> رضا السواح (AI)</a>
-    <a href="#" data-tab="tourists"><i class="fas fa-globe"></i> السياحة الدولية</a>
-    <a href="#" data-tab="summer"><i class="fas fa-sun"></i> موسم الاصطياف</a>
-    <a href="#" data-tab="archaeology"><i class="fas fa-landmark"></i> السياحة الثقافية</a>
-    <a href="#" data-tab="transport"><i class="fas fa-plane"></i> النقل الجوي</a>
-    <a href="#" data-tab="economy"><i class="fas fa-chart-line"></i> الاقتصاد السياحي</a>
-    <a href="#" data-tab="decision"><i class="fas fa-chalkboard-user"></i> متخذي القرار</a>
-    <a href="#" data-tab="map"><i class="fas fa-map"></i> الخريطة</a>
-  </nav>
-  <div style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem;">
-    <button id="contrastBtn" style="background: transparent; border: none; color: white; width: 100%; text-align: right; padding: 8px; border-radius: 8px; cursor: pointer;"><i class="fas fa-adjust"></i> وضع التباين العالي</button>
-  </div>
-</aside>
-
-<main class="main">
-  <div class="dashboard-header">
-    <h1 style="color: var(--primary);"><i class="fas fa-chart-line" style="color: var(--accent);"></i> لوحة القيادة السياحية – ليبيا 2026</h1>
-    <div class="btn-group"><button id="exportBtn" class="btn"><i class="fas fa-download"></i> تصدير CSV</button><button id="refreshBtn" class="btn"><i class="fas fa-sync-alt"></i> تحديث</button></div>
-  </div>
-
-  <!-- Dashboard (main) -->
-  <div id="dashboard" class="tab-content active">
-    <div class="card">
-      <h2 class="section-title"><i class="fas fa-chart-simple"></i> أبرز مؤشرات القطاع 2025</h2>
-      <div class="kpi-grid">
-        <div class="kpi-card"><i class="fas fa-hotel"></i><h2>777</h2><p>مرافق الإيواء</p></div>
-        <div class="kpi-card"><i class="fas fa-building"></i><h2>384</h2><p>فنادق</p></div>
-        <div class="kpi-card"><i class="fas fa-apartment"></i><h2>258</h2><p>شقق فندقية</p></div>
-        <div class="kpi-card"><i class="fas fa-umbrella-beach"></i><h2>135</h2><p>قرى سياحية</p></div>
-        <div class="kpi-card"><i class="fas fa-home"></i><h2>2,525</h2><p>عدد الشركات والمكاتب السياحية</p></div>
-        <div class="kpi-card"><i class="fas fa-users"></i><h2>373,843</h2><p>نزلاء الفنادق</p></div>
-        <div class="kpi-card"><i class="fas fa-passport"></i><h2 id="dashboardTourists">2,752</h2><p>سياح دوليون</p></div>
-        <div class="kpi-card"><i class="fas fa-chart-line"></i><h2 id="dashboardTotalRev">1.265 مليار</h2><p>الأثر الاقتصادي</p></div>
-      </div>
+  <header class="main-header">
+    <div>
+      <h1>منصة المؤشرات السياحية الليبية</h1>
+      <p>Libyan Tourism KPI Platform</p>
     </div>
-    <div class="card">
-      <h2 class="section-title"><i class="fas fa-chart-line"></i> التطور التاريخي (مرافق الإيواء والنزلاء)</h2>
-      <div class="chart-container"><canvas id="mainTrendChart"></canvas></div>
-    </div>
-  </div>
+    <div class="header-badge">2025</div>
+  </header>
 
-  <!-- Indicators -->
-  <div id="indicators" class="tab-content">
-    <div class="card">
-      <h2 class="section-title"><i class="fas fa-list-ul"></i> قاعدة البيانات السياحية الشاملة 2025</h2>
-      <div class="stats-grid">
-        <div class="stat-item"><div class="stat-title">إجمالي مرافق الإيواء</div><div class="stat-value">777</div></div>
-        <div class="stat-item"><div class="stat-title">فنادق</div><div class="stat-value">384</div></div>
-        <div class="stat-item"><div class="stat-title">شقق فندقية</div><div class="stat-value">258</div></div>
-        <div class="stat-item"><div class="stat-title">قرى سياحية</div><div class="stat-value">135</div></div>
-        <div class="stat-item"><div class="stat-title">استراحات فردية</div><div class="stat-value">1,980</div></div>
-        <div class="stat-item"><div class="stat-title">الغرف الفندقية</div><div class="stat-value">21,821</div></div>
-        <div class="stat-item"><div class="stat-title">الأسرة الفندقية</div><div class="stat-value">75,606</div></div>
-        <div class="stat-item"><div class="stat-title">الشركات السياحية</div><div class="stat-value">2,556</div></div>
-        <div class="stat-item"><div class="stat-title">المطاعم والمقاهي</div><div class="stat-value">3,300</div></div>
-        <div class="stat-item"><div class="stat-title">نزلاء الفنادق</div><div class="stat-value">373,843</div></div>
-        <div class="stat-item"><div class="stat-title">السياح الدوليون</div><div class="stat-value">2,752</div></div>
-        <div class="stat-item"><div class="stat-title">رأس مال الشركات</div><div class="stat-value">244.1M د.ل</div></div>
-        <div class="stat-item"><div class="stat-title">مواقع التنمية المستهدفة</div><div class="stat-value">150 موقع</div></div>
-        <div class="stat-item"><div class="stat-title">الحرفيين المسجلين</div><div class="stat-value">823</div></div>
-        <div class="stat-item"><div class="stat-title">المرشدين السياحيين</div><div class="stat-value">311</div></div>
-        <div class="stat-item"><div class="stat-title">مساحة مواقع التنمية</div><div class="stat-value">34,456 هكتار</div></div>
-        <div class="stat-item"><div class="stat-title">المنتزهات الوطنية</div><div class="stat-value">26</div></div>
-        <div class="stat-item"><div class="stat-title">مساحة المنتزهات</div><div class="stat-value">3,600 هكتار</div></div>
-        <div class="stat-item"><div class="stat-title">مؤسسات التعليم السياحي</div><div class="stat-value">16</div></div>
-        <div class="stat-item"><div class="stat-title">قاعدة البيانات المكانية</div><div class="stat-value">7,525 موقع</div></div>
-      </div>
-    </div>
-  </div>
+  <main class="container">
 
-  <!-- Analysis -->
-  <div id="analysis" class="tab-content">
-    <div class="card"><h2 class="section-title"><i class="fas fa-chart-pie"></i> هيكل مرافق الإيواء</h2><div class="chart-container"><canvas id="facilityPieChart"></canvas></div></div>
-    <div class="card"><h2 class="section-title"><i class="fas fa-chart-bar"></i> توزيع مرافق الإيواء حسب المناطق</h2><div class="chart-container"><canvas id="facilityRegionChart"></canvas></div></div>
-    <div class="card"><h2 class="section-title"><i class="fas fa-chart-pie"></i> توزيع الجنسيات (نزلاء الفنادق)</h2><div class="chart-container"><canvas id="nationalityChart"></canvas></div></div>
-    <div class="card"><h2 class="section-title"><i class="fas fa-chart-line"></i> تطور الرحلات الجوية (2021-2025)</h2><div class="chart-container"><canvas id="flightsChart"></canvas></div></div>
-  </div>
+    <section class="section-title">
+      <h2>المؤشرات الوطنية الرئيسية</h2>
+      <p>لوحة مؤشرات مبنية على بيانات 2025 وربطها بمنهجية المؤشرات السياحية الدولية.</p>
+    </section>
 
-  <!-- Comparison -->
-  <div id="comparison" class="tab-content">
-    <div class="card"><h2 class="section-title"><i class="fas fa-calendar-alt"></i> مقارنة تطور المؤشرات (2021-2025)</h2><div class="table-responsive"><table class="data-table" id="comparisonTable"><thead><tr><th>المؤشر</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>النمو 24-25</th></tr></thead><tbody></tbody></table></div></div>
-  </div>
+    <section class="kpi-grid" id="kpiGrid"></section>
 
-  <!-- ========== التقرير الوطني الشامل (النسخة الوزارية النهائية) ========== -->
-  <div id="nationalReport" class="tab-content">
-    <div class="card">
-      <h2 class="section-title"><i class="fas fa-chart-line"></i> التقرير الوطني الشامل – تحليل رضا السياح الأجانب عن ليبيا</h2>
-      <p style="font-size:1rem; margin-bottom:1rem;"><strong>📊 43 فيديو | 15 صانع محتوى | 8 جنسيات | 8.5 مليون مشاهدة | 6M إعجابات | 450K تعليق</strong></p>
-      
-      <!-- حجم البيانات والمشاعر -->
-      <div class="dashboard-grid">
-        <div class="dashboard-card"><div class="card-header-dash"><i class="fas fa-video"></i><h3>حجم المحتوى المحلل</h3></div><div class="stat-value">43 فيديو</div><div>15 صانع محتوى | 8 جنسيات</div><div class="small-note">TikTok 56M | YouTube 22M | FB 7M</div></div>
-        <div class="dashboard-card"><div class="card-header-dash"><i class="fas fa-eye"></i><h3>إجمالي الوصول (Reach)</h3></div><div class="stat-value">8.5M</div><div>مشاهدة</div><div class="small-note">+6M إعجابات | 450K تعليقات</div></div>
-        <div class="dashboard-card"><div class="card-header-dash"><i class="fas fa-chart-pie"></i><h3>تحليل المشاعر</h3></div><div class="stat-value">82% إيجابي</div><div>12% متردد | 6% سلبي</div><div class="progress-bar-sm"><div class="progress-fill-sm" style="width:82%; background:#2b9348;">82%</div></div><div class="small-note">ليبيا أصبحت وجهة مقبولة عالمياً بنسبة عالية</div></div>
-        <div class="dashboard-card"><div class="card-header-dash"><i class="fas fa-plane"></i><h3>نية السفر</h3></div><div class="stat-value">50% راغب</div><div>25% جاد | 19% متردد | 6% رافض</div><div class="progress-bar-sm"><div class="progress-fill-sm" style="width:75%; background:#d4af37;">75% سوق قابل للتحويل</div></div><div class="small-note">🔥 75% من الجمهور يمثل سوقاً سياحياً قابلاً للتحويل</div></div>
+    <section class="dashboard-grid">
+      <div class="card">
+        <h2>توزيع السواح الدوليين حسب القارات</h2>
+        <p class="card-note">تحليل الأسواق السياحية الوافدة إلى ليبيا حسب القارة.</p>
+        <canvas id="continentsChart"></canvas>
       </div>
 
-      <!-- تحليل الجنسيات والفئة العمرية -->
-      <div class="dashboard-grid">
-        <div class="dashboard-card">
-          <div class="card-header-dash"><i class="fas fa-globe-americas"></i><h3>التفاعل حسب الجنسيات</h3></div>
-          <div class="country-sentiment"><span class="country-flag">🇺🇸</span> أمريكا <span>30%</span><div class="progress-bar-sm" style="width:100px;"><div class="progress-fill-sm" style="width:30%;">30%</div></div></div>
-          <div class="country-sentiment"><span class="country-flag">🇬🇧</span> بريطانيا <span>18%</span><div class="progress-bar-sm" style="width:100px;"><div class="progress-fill-sm" style="width:18%;">18%</div></div></div>
-          <div class="country-sentiment"><span class="country-flag">🇩🇪</span> ألمانيا <span>15%</span><div class="progress-bar-sm" style="width:100px;"><div class="progress-fill-sm" style="width:15%;">15%</div></div></div>
-          <div class="country-sentiment"><span class="country-flag">🇨🇦</span> كندا <span>10%</span><div class="progress-bar-sm" style="width:100px;"><div class="progress-fill-sm" style="width:10%;">10%</div></div></div>
-          <div class="country-sentiment"><span class="country-flag">🇫🇷</span> فرنسا <span>9%</span><div class="progress-bar-sm" style="width:100px;"><div class="progress-fill-sm" style="width:9%;">9%</div></div></div>
-          <div class="country-sentiment"><span class="country-flag">🇮🇹</span> إيطاليا <span>8%</span><div class="progress-bar-sm" style="width:100px;"><div class="progress-fill-sm" style="width:8%;">8%</div></div></div>
-          <p class="small-note">🔥 73% من الطلب من الغرب (أعلى قيمة اقتصادية سياحياً)</p>
-        </div>
-        <div class="dashboard-card">
-          <div class="card-header-dash"><i class="fas fa-users"></i><h3>الفئة العمرية المستهدفة</h3></div>
-          <div class="chart-container"><canvas id="ageGroupChart"></canvas></div>
-          <p class="small-note">🎯 25–34 سنة: المحرك الرئيسي للسياحة العالمية وصناع المحتوى</p>
-        </div>
-        <div class="dashboard-card">
-          <div class="card-header-dash"><i class="fas fa-heart"></i><h3>الاهتمامات السياحية</h3></div>
-          <div class="chart-container"><canvas id="interestsChart"></canvas></div>
-          <p class="small-note">🔥 ليبيا قوية في "التجربة الحقيقية" وليس السياحة التجارية</p>
-        </div>
+      <div class="card">
+        <h2>تنبؤات 2035</h2>
+        <p class="card-note">نموذج تنبؤ أولي باستخدام معدل نمو مركب للمؤشرات الرئيسية.</p>
+        <div id="forecastBox"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>لوحة المدن السياحية</h2>
+      <p class="card-note">
+        توزيع أعداد النزلاء في مرافق الإيواء السياحي حسب الفروع والجنسيات.
+      </p>
+
+      <div class="table-wrap">
+        <table id="citiesTable">
+          <thead>
+            <tr>
+              <th>المدينة / الفرع</th>
+              <th>ليبيون</th>
+              <th>عرب</th>
+              <th>أجانب</th>
+              <th>الإجمالي</th>
+              <th>الحصة من الإجمالي</th>
+              <th>نسبة الليبيين</th>
+              <th>نسبة العرب</th>
+              <th>نسبة الأجانب</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>ترتيب المدن حسب عدد النزلاء</h2>
+      <p class="card-note">
+        يظهر الرسم ترتيب المدن السياحية حسب إجمالي النزلاء في مرافق الإيواء.
+      </p>
+      <canvas id="citiesChart"></canvas>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="card">
+        <h2>تحليل جنسيات النزلاء وطنياً</h2>
+        <canvas id="nationalityChart"></canvas>
       </div>
 
-      <!-- تقييم الخدمات والمعوقات -->
-      <div class="dashboard-grid">
-        <div class="dashboard-card">
-          <div class="card-header-dash"><i class="fas fa-star"></i><h3>تقييم القطاعات السياحية (/10)</h3></div>
-          <div class="chart-container"><canvas id="servicesRatingChart"></canvas></div>
-          <p class="small-note">التجربة ممتازة… لكن الوصول ضعيف (الإجراءات 4.3)</p>
-        </div>
-        <div class="dashboard-card">
-          <div class="card-header-dash"><i class="fas fa-exclamation-triangle"></i><h3>المعوقات الرئيسية</h3></div>
-          <div class="chart-container"><canvas id="barriersChart"></canvas></div>
-          <div class="insight-box"><strong>❗ أخطر استنتاج:</strong> 70% من المشكلة = الوصول وليس السياحة (التأشيرة 80% + القيود 68%)</div>
-        </div>
+      <div class="card">
+        <h2>مؤشرات مدينة طرابلس</h2>
+        <div id="tripoliBox"></div>
+        <canvas id="tripoliAccommodationChart"></canvas>
       </div>
+    </section>
 
-      <!-- المؤشر المركب والخلاصة -->
-      <div class="dashboard-grid">
-        <div class="dashboard-card">
-          <div class="card-header-dash"><i class="fas fa-chart-line"></i><h3>Libya Tourism Readiness Index</h3></div>
-          <div style="text-align:center;"><span style="font-size:3rem; font-weight:800; color:var(--accent);">8.5</span><span> / 10</span>
-          <div class="progress-bar-sm"><div class="progress-fill-sm" style="width:85%;">85%</div></div>
-          <div class="flex-stats"><span>التجربة: 9.2</span><span>الصورة: 7.5</span><span>الوصول: 4.5</span></div>
-          </div>
-          <div class="small-note">ليبيا تمتلك منتجاً سياحياً "غير قابل للتكرار"</div>
-        </div>
-        <div class="dashboard-card">
-          <div class="card-header-dash"><i class="fas fa-microchip"></i><h3>التحليل الاستراتيجي النهائي</h3></div>
-          <p><strong>🔷 ليبيا تمتلك:</strong> طلباً عالمياً ✔️ رضا مرتفعاً ✔️ تجربة قوية ✔️</p>
-          <p><strong>❗ التحدي:</strong> الوصول، الإجراءات، التنظيم</p>
-          <div class="insight-box"><strong>🚨 أخطر استنتاج في التقرير:</strong> ليبيا لا تعاني من ضعف سياحي… بل من تعطيل إداري للسياحة</div>
-        </div>
-      </div>
+  </main>
 
-      <!-- القرار الاستراتيجي والخلاصة النهائية -->
-      <div class="minister-quote">
-        <i class="fas fa-bullhorn" style="font-size:2rem;"></i>
-        <h3>القرار الاستراتيجي</h3>
-        <p>إذا تم: 1. تبسيط التأشيرة | 2. تخفيف القيود الأمنية | 3. دعم المحتوى الرقمي<br>
-        <strong>🔥 النتيجة خلال 3 سنوات:</strong> مضاعفة السياح ×3 ودخول ليبيا ضمن Top Emerging Destinations</p>
-        <hr style="margin:1rem 0; border-color:rgba(255,255,255,0.3);">
-        <p><strong>🧾 الخلاصة النهائية:</strong> ليبيا لم تعد مجهولة، لم تعد مرفوضة، أصبحت مرغوبة.</p>
-        <p><strong>🔥 الجملة الحاسمة:</strong> "العالم لم يعد يسأل إن كانت ليبيا آمنة… بل بدأ يسأل كيف يصل إليها"</p>
-        <p><strong>🚀 الرسالة السياسية النهائية:</strong> "ليبيا لا تحتاج إلى بناء سياحة جديدة… بل تحتاج إلى قرار يحرر السياحة الموجودة بالفعل"</p>
-      </div>
-    </div>
-  </div>
+  <footer>
+    مركز المعلومات والتوثيق السياحي – وزارة السياحة والصناعات التقليدية
+  </footer>
 
-  <!-- باقي التبويبات -->
-  <div id="tourists" class="tab-content"><div class="card"><h2 class="section-title"><i class="fas fa-chart-line"></i> محاكاة السيناريوهات - السياحة الدولية</h2><div class="scenario-buttons"><button class="scenario-btn worst" id="worstBtn">سيناريو متشائم</button><button class="scenario-btn base" id="baseBtn">سيناريو أساسي</button><button class="scenario-btn best" id="bestBtn">سيناريو متفائل</button></div><div class="stats-grid"><div class="stat-item"><div class="stat-title">السياح الدوليون</div><div class="stat-value" id="simTourists">2,752</div></div><div class="stat-item"><div class="stat-title">متوسط الإقامة</div><div class="stat-value" id="simStay">5 أيام</div></div><div class="stat-item"><div class="stat-title">الإنفاق اليومي</div><div class="stat-value" id="simDaily">1,020 د.ل</div></div><div class="stat-item"><div class="stat-title">الإيرادات الدولية</div><div class="stat-value" id="simIntlRev">14.03M د.ل</div></div><div class="stat-item"><div class="stat-title">الليالي السياحية</div><div class="stat-value" id="simNights">13,760</div></div><div class="stat-item"><div class="stat-title">معدل الإشغال</div><div class="stat-value" id="simOccupancy">0.05%</div></div><div class="stat-item"><div class="stat-title">الإيرادات الكلية</div><div class="stat-value" id="simTotal">1.264B د.ل</div></div><div class="stat-item"><div class="stat-title">مساهمة الاقتصاد</div><div class="stat-value" id="simGdp">0.63%</div></div></div></div><div class="card"><h2 class="section-title"><i class="fas fa-globe"></i> توزيع السياح الدوليين حسب القارة</h2><div class="chart-container"><canvas id="continentChart"></canvas></div></div></div>
-  <div id="summer" class="tab-content"><div class="card"><h2 class="section-title"><i class="fas fa-sun"></i> موسم الاصطياف 2025</h2><div class="stats-grid"><div class="stat-item"><div class="stat-title">إيرادات 2024</div><div class="stat-value">822.4M د.ل</div></div><div class="stat-item"><div class="stat-title">إيرادات 2025</div><div class="stat-value">1,250.8M د.ل</div></div><div class="stat-item"><div class="stat-title">نسبة النمو</div><div class="stat-value">+52%</div></div></div></div><div class="card"><h2 class="section-title"><i class="fas fa-chart-pie"></i> هيكل إيرادات الاصطياف 2025</h2><div class="chart-container"><canvas id="summerPieChart"></canvas></div></div><div class="card"><h2 class="section-title"><i class="fas fa-chart-line"></i> تطور إيرادات الاصطياف (2020-2025)</h2><div class="chart-container"><canvas id="summerTrendChart"></canvas></div></div></div>
-  <div id="archaeology" class="tab-content"><div class="card"><h2 class="section-title"><i class="fas fa-landmark"></i> حركة الزوار في المواقع الأثرية</h2><div class="table-responsive"><table class="data-table"><thead><tr><th>الموقع</th><th>2024</th><th>2025</th><th>النمو</th></tr></thead><tbody><tr><td>شحات</td><td>113,300</td><td>275,000</td><td style="color:var(--success)">+143%</td></tr><tr><td>صبراتة</td><td>38,060</td><td>77,500</td><td style="color:var(--success)">+104%</td></tr><tr><td>لبدة</td><td>39,400</td><td>40,200</td><td style="color:var(--success)">+2%</td></tr><tr><td>غدامس</td><td>—</td><td>5,500</td><td style="color:var(--success)">جديد</td></tr></tbody></table></div></div><div class="card"><h2 class="section-title"><i class="fas fa-chart-bar"></i> المقارنة بين 2024 و 2025</h2><div class="chart-container"><canvas id="archaeologyBarChart"></canvas></div></div></div>
-  <div id="transport" class="tab-content"><div class="card"><h2 class="section-title"><i class="fas fa-plane"></i> النقل الجوي والموانئ</h2><div class="stats-grid"><div class="stat-item"><div class="stat-title">الرحلات الجوية 2025</div><div class="stat-value">30,736</div></div><div class="stat-item"><div class="stat-title">المسافرين جوًا</div><div class="stat-value">1,152,479</div></div><div class="stat-item"><div class="stat-title">المسافرين برًا</div><div class="stat-value">1,679,569</div></div></div></div><div class="card"><h2 class="section-title"><i class="fas fa-chart-pie"></i> توزيع المسافرين حسب وسيلة النقل</h2><div class="chart-container"><canvas id="transportPieChart"></canvas></div></div></div>
-  <div id="economy" class="tab-content"><div class="card"><h2 class="section-title"><i class="fas fa-chart-line"></i> الاقتصاد السياحي</h2><div class="stats-grid"><div class="stat-item"><div class="stat-title">الإيرادات المحلية</div><div class="stat-value">1.25 مليار د.ل</div></div><div class="stat-item"><div class="stat-title">الإيرادات الدولية</div><div class="stat-value" id="economyIntlRev">14.03M د.ل</div></div><div class="stat-item"><div class="stat-title">الأثر الاقتصادي الإجمالي</div><div class="stat-value" id="economyTotal">1.264B د.ل</div></div><div class="stat-item"><div class="stat-title">مساهمة الناتج المحلي</div><div class="stat-value" id="economyGdpShare">0.63%</div></div></div></div><div class="card"><h2 class="section-title"><i class="fas fa-chart-line"></i> تطور الإيرادات السياحية (2021-2025)</h2><div class="chart-container"><canvas id="economyTrendChart"></canvas></div></div></div>
-  <div id="decision" class="tab-content"><div class="card"><h2 class="section-title"><i class="fas fa-chalkboard-user"></i> مؤشرات الأداء الاستراتيجي – منهجية UNWTO</h2><div class="decision-grid" id="decisionGrid"></div><div class="chart-container-decision"><canvas id="decisionBarChart" style="max-height: 350px; width: 100%;"></canvas></div><div class="card" style="margin-top:1rem; background: linear-gradient(145deg, #0f2b4b, #1a3f62); color:white;"><h3><i class="fas fa-lightbulb"></i> الخلاصة الاستراتيجية والتوصيات</h3><p><strong>🧠 الرسالة الاستراتيجية:</strong> المشكلة ليست في البنية التحتية بل في الطلب السياحي، التسويق، والسياسات.</p><ul style="margin-top:0.8rem;"><li>✈️ تحفيز السياحة الدولية: تسهيلات التأشيرة، حملات دولية.</li><li>🏨 رفع الإشغال الفندقي: ربط الفنادق بالفعاليات، تنشيط السياحة الداخلية.</li><li>💰 زيادة الإنفاق: تطوير التجارب السياحية، تنويع المنتجات.</li><li>📈 رفع مساهمة الاقتصاد: جذب استثمار سياحي، تطوير الوجهات.</li></ul></div></div></div>
-  <div id="map" class="tab-content"><div class="card"><h2 class="section-title"><i class="fas fa-map"></i> الخريطة التفاعلية للمعالم السياحية في ليبيا</h2><div class="map-container"><iframe class="map-iframe" src="https://tidclibya2026.github.io/libyan--map/" title="خريطة ليبيا السياحية التفاعلية" allowfullscreen loading="lazy"></iframe></div><div class="small-note"><i class="fas fa-info-circle"></i> يمكنك التكبير والتصغير والتنقل داخل الخريطة.</div></div></div>
-
-  <div class="footer" style="text-align: center; padding: 1rem; color: var(--text-muted);">© 2026 وزارة السياحة والصناعات التقليدية – مركز المعلومات والتوثيق | بيانات مبنية على منهجية وتحليلات UNWTO </div>
-</main>
-<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
-
-<script>
-// ------------------------- البيانات الأساسية -------------------------
-let UNWTO_DATA = { tourists: 2752, avgStay: 5, dailyUSD: 120, exchange: 8.5, domesticRevenue: 1250797500, beds: 75606, population: 7000000, gdp: 200000000000 };
-function computeMetrics() {
-  const dailyLYD = UNWTO_DATA.dailyUSD * UNWTO_DATA.exchange;
-  const spendPerTourist = dailyLYD * UNWTO_DATA.avgStay;
-  const nights = UNWTO_DATA.tourists * UNWTO_DATA.avgStay;
-  const intlRevenue = UNWTO_DATA.tourists * spendPerTourist;
-  const totalRevenue = UNWTO_DATA.domesticRevenue + intlRevenue;
-  const occupancy = (nights / (UNWTO_DATA.beds * 365)) * 100;
-  const density = (UNWTO_DATA.tourists / UNWTO_DATA.population) * 1000;
-  const bedProductivity = UNWTO_DATA.tourists / UNWTO_DATA.beds;
-  const gdpShare = (totalRevenue / UNWTO_DATA.gdp) * 100;
-  return { totalRevenue, intlRevenue, nights, occupancy, density, bedProductivity, gdpShare, spendPerTourist, dailyLYD };
-}
-
-// ------------------------- بطاقات القرار -------------------------
-function renderDecisionCards() {
-  const metrics = computeMetrics();
-  const totalRevB = (metrics.totalRevenue / 1e9).toFixed(3);
-  const intlSpendM = (metrics.intlRevenue / 1e6).toFixed(2);
-  const indicators = [
- { id:"totalRev", title:"إجمالي الإيرادات السياحية", value:totalRevB + " مليار د.ل", icon:"fas fa-dollar-sign",
-      def:"إجمالي العوائد الناتجة عن النشاط السياحي (مباشر وغير مباشر).",
-      formula:"الإيرادات = عدد السياح × متوسط الإنفاق × مدة الإقامة + الإيرادات المحلية",
-      analysis:"الرقم يعكس نشاطاً اقتصادياً قائماً لكنه يعتمد غالباً على السياحة الداخلية أو الحكومية." },
-    { id:"avgStay", title:"متوسط مدة الإقامة", value:UNWTO_DATA.avgStay + " أيام", icon:"fas fa-calendar-week",
-      def:"عدد الأيام التي يقضيها السائح داخل الدولة.",
-      formula:"إجمالي الليالي السياحية / عدد السياح",
-      analysis:"مؤشر إيجابي نسبياً؛ يدل على وجود خدمات كافية للإقامة." },
-    { id:"occupancy", title:"معدل الإشغال السنوي", value:metrics.occupancy.toFixed(2)+"%", icon:"fas fa-bed",
-      def:"نسبة إشغال الفنادق من إجمالي الطاقة الاستيعابية.",
-      formula:"(الليالي السياحية / (الأسرة × 365)) × 100",
-      analysis:"هذا الرقم حرج جداً (أقل من 1%)، يدل على ضعف الطلب السياحي." },
-    { id:"gdpShare", title:"مساهمة السياحة في الناتج المحلي", value:metrics.gdpShare.toFixed(2)+"%", icon:"fas fa-chart-line",
-      def:"نسبة مساهمة القطاع السياحي في الناتج المحلي الإجمالي.",
-      formula:"(إجمالي الإيرادات السياحية / الناتج المحلي) × 100",
-      analysis:"نسبة ضعيفة جداً (أقل من 1%)، بينما تتراوح النسبة في الدول السياحية بين 10-25%." },
-    { id:"intlSpend", title:"إنفاق السائح الدولي", value:intlSpendM + " مليون د.ل", icon:"fas fa-money-bill-wave",
-      def:"إجمالي ما ينفقه السياح الدوليون خلال زياراتهم.",
-      formula:"عدد السياح × متوسط الإنفاق اليومي × مدة الإقامة",
-      analysis:"منخفض جداً بسبب قلة عدد السياح الدوليين." },
-    { id:"tourists", title:"عدد السياح الدوليين", value:UNWTO_DATA.tourists.toLocaleString(), icon:"fas fa-passport",
-      def:"عدد الزوار القادمين من خارج البلاد لأغراض سياحية.",
-      formula:"إحصاء مباشر من المنافذ الحدودية والاستبيانات.",
-      analysis:"رقم منخفض جداً ويعكس ضعف التسويق الدولي وقيود السفر." },
-    { id:"nights", title:"الليالي السياحية", value:metrics.nights.toLocaleString(), icon:"fas fa-moon",
-      def:"إجمالي عدد ليالي المبيت التي يقضيها السياح.",
-      formula:"عدد السياح × مدة الإقامة",
-      analysis:"مؤشر مهم لقياس النشاط الفندقي، لكنه منخفض بسبب قلة السياح." },
-    { id:"density", title:"الكثافة السياحية", value:metrics.density.toFixed(2), icon:"fas fa-chart-simple",
-      def:"عدد السياح مقارنة بعدد السكان (لكل 1000 نسمة).",
-      formula:"(عدد السياح / عدد السكان) × 1000",
-      analysis:"منخفضة جداً، مساحة كبيرة للنمو دون ضغط على الموارد." },
-    { id:"bedProd", title:"إنتاجية السرير", value:metrics.bedProductivity.toFixed(3), icon:"fas fa-procedures",
-      def:"عدد السياح لكل سرير فندقي (مؤشر كفاءة التشغيل).",
-      formula:"عدد السياح / عدد الأسرة",
-      analysis:"منخفض جداً، يعكس ضعف استغلال الفنادق." }  ];
-  const container = document.getElementById('decisionGrid');
-  if(container) {
-    container.innerHTML = '';
-    indicators.forEach(ind => {
-      const card = document.createElement('div');
-      card.className = 'decision-card-expanded';
-      card.innerHTML = `<div class="decision-header" data-id="${ind.id}"><h3><i class="${ind.icon}"></i> ${ind.title}</h3><div class="decision-value-large">${ind.value}</div><i class="fas fa-chevron-down"></i></div><div class="decision-body" id="body-${ind.id}"><p><strong>📖 التعريف:</strong> ${ind.def}</p><p><strong>🧮 المعادلة (منهجية UNWTO):</strong> ${ind.formula}</p><div class="insight"><strong>📊 التحليل:</strong> ${ind.analysis}</div></div>`;
-      container.appendChild(card);
-    });
-    document.querySelectorAll('.decision-header').forEach(header => { header.addEventListener('click', () => { const body = header.nextElementSibling; body.classList.toggle('open'); const icon = header.querySelector('.fa-chevron-down'); if(icon) icon.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)'; }); });
-  }
-  updateDecisionChart(metrics.totalRevenue/1e6, UNWTO_DATA.tourists, metrics.nights, metrics.intlRevenue/1e6, metrics.occupancy, metrics.gdpShare);
-}
-let decisionChart = null;
-function updateDecisionChart(totalRevM, tourists, nights, intlSpendM, occupancy, gdpShare) {
-  const ctx = document.getElementById('decisionBarChart');
-  if(!ctx) return;
-  const context = ctx.getContext('2d');
-  if(decisionChart) decisionChart.destroy();
-  decisionChart = new Chart(context, { type: 'bar', data: { labels: ['الإيرادات (مليون)', 'السياح الدوليون', 'الليالي السياحية', 'الإنفاق الدولي (مليون)', 'الإشغال (%)', 'مساهمة الناتج (%)'], datasets: [{ label: 'القيم', data: [totalRevM, tourists, nights, intlSpendM, occupancy, gdpShare], backgroundColor: '#d4af37', borderRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: true } });
-}
-
-// ------------------------- السيناريوهات -------------------------
-const scenarios = { worst: { tourists: 1500, stay: 2, dailyUSD: 80 }, base: { tourists: 2752, stay: 5, dailyUSD: 120 }, best: { tourists: 8000, stay: 7, dailyUSD: 200 } };
-function setScenario(type) {
-  const s = scenarios[type];
-  UNWTO_DATA.tourists = s.tourists;
-  UNWTO_DATA.avgStay = s.stay;
-  UNWTO_DATA.dailyUSD = s.dailyUSD;
-  renderDecisionCards();
-  document.getElementById("dashboardTourists").innerText = s.tourists.toLocaleString();
-  const metrics = computeMetrics();
-  document.getElementById("dashboardTotalRev").innerText = (metrics.totalRevenue/1e9).toFixed(3) + " مليار";
-  const dailyLYD = s.dailyUSD * 8.5;
-  const intlRev = s.tourists * (dailyLYD * s.stay);
-  const total = intlRev + UNWTO_DATA.domesticRevenue;
-  document.getElementById("simTourists") && (document.getElementById("simTourists").innerText = s.tourists.toLocaleString());
-  document.getElementById("simStay") && (document.getElementById("simStay").innerText = s.stay + " أيام");
-  document.getElementById("simDaily") && (document.getElementById("simDaily").innerText = (dailyLYD).toFixed(0) + " د.ل");
-  document.getElementById("simIntlRev") && (document.getElementById("simIntlRev").innerText = (intlRev/1e6).toFixed(2) + "M د.ل");
-  document.getElementById("simNights") && (document.getElementById("simNights").innerText = (s.tourists * s.stay).toLocaleString());
-  document.getElementById("simOccupancy") && (document.getElementById("simOccupancy").innerText = ((s.tourists * s.stay) / (75606 * 365) * 100).toFixed(2) + "%");
-  document.getElementById("simTotal") && (document.getElementById("simTotal").innerText = (total/1e9).toFixed(3) + "B د.ل");
-  document.getElementById("simGdp") && (document.getElementById("simGdp").innerText = (total / 200000000000 * 100).toFixed(2) + "%");
-  document.getElementById("economyIntlRev") && (document.getElementById("economyIntlRev").innerText = (intlRev/1e6).toFixed(2) + "M د.ل");
-  document.getElementById("economyTotal") && (document.getElementById("economyTotal").innerText = (total/1e9).toFixed(3) + "B د.ل");
-  document.getElementById("economyGdpShare") && (document.getElementById("economyGdpShare").innerText = (total / 200000000000 * 100).toFixed(2) + "%");
-}
-
-// ------------------------- جميع الرسوم البيانية -------------------------
-function initAllCharts() {
-  // Existing charts
-  new Chart(document.getElementById('facilityPieChart'), { type: 'pie', data: { labels: ['فنادق (384)', 'شقق فندقية (258)', 'قرى سياحية (135)'], datasets: [{ data: [384,258,135], backgroundColor: ['#1e5a88','#d4af37','#2c7a4d'] }] } });
-  new Chart(document.getElementById('facilityRegionChart'), { type: 'bar', data: { labels: ['طرابلس', 'بنغازي', 'مصراتة', 'الغربية', 'الجنوبية', 'الشرقية'], datasets: [{ label: 'مرافق الإيواء', data: [322,187,99,73,50,46], backgroundColor: '#1e5a88', borderRadius: 8 }] } });
-  new Chart(document.getElementById('nationalityChart'), { type: 'pie', data: { labels: ['ليبيون (263,357)', 'عرب (92,575)', 'أجانب (17,911)'], datasets: [{ data: [263357,92575,17911], backgroundColor: ['#2980b9','#e67e22','#c0392b'] }] } });
-  new Chart(document.getElementById('flightsChart'), { type: 'line', data: { labels: [2021,2022,2023,2024,2025], datasets: [{ label: 'الرحلات الجوية', data: [0,8424,11180,19804,30736], borderColor: '#1e5a88', fill: true, backgroundColor: 'rgba(30,90,136,0.1)' }] } });
-  new Chart(document.getElementById('mainTrendChart'), { type: 'line', data: { labels: [2021,2022,2023,2024,2025], datasets: [{ label: 'مرافق الإيواء', data: [428,474,525,630,777], borderColor: '#1e5a88', borderWidth: 3 }, { label: 'نزلاء الفنادق (بالألف)', data: [150,187,257,306,373.8], borderColor: '#d4af37', borderWidth: 3 }] } });
-  
-  const tbody = document.querySelector('#comparisonTable tbody');
-  if(tbody) {
-    const labels = ['مرافق الإيواء', 'الشركات السياحية', 'المطاعم والمقاهي', 'نزلاء الفنادق', 'الرحلات الجوية'];
-    const rows = [[428,474,525,630,777],[2038,2134,2332,2432,2556],[2229,2474,2746,3048,3300],[150000,187000,257000,306000,373843],[0,8424,11180,19804,30736]];
-    tbody.innerHTML = '';
-    for(let i=0; i<labels.length; i++) {
-      const growth = ((rows[i][4] - rows[i][3]) / rows[i][3] * 100).toFixed(1);
-      tbody.innerHTML += `<tr><td>${labels[i]}</td>${rows[i].map(v => `<td>${v.toLocaleString()}</td>`).join('')}<td style="color:var(--success)">+${growth}%</td></tr>`;
-    }
-  }
-  
-  new Chart(document.getElementById('continentChart'), { type: 'bar', data: { labels: ['أوروبا', 'آسيا', 'أفريقيا', 'أمريكا', 'أستراليا'], datasets: [{ label: 'عدد السياح', data: [1243,611,571,293,34], backgroundColor: '#d4af37', borderRadius: 8 }] } });
-  new Chart(document.getElementById('summerPieChart'), { type: 'pie', data: { labels: ['القرى السياحية (52%)', 'الفنادق (38%)', 'المصائف (9%)'], datasets: [{ data: [52,38,9], backgroundColor: ['#2c7a4d','#1e5a88','#e67e22'] }] } });
-  new Chart(document.getElementById('summerTrendChart'), { type: 'line', data: { labels: [2020,2021,2022,2023,2024,2025], datasets: [{ label: 'إيرادات الاصطياف (مليون د.ل)', data: [450,520,680,710,822,1250], borderColor: '#d4af37', fill: true }] } });
-  new Chart(document.getElementById('archaeologyBarChart'), { type: 'bar', data: { labels: ['شحات', 'صبراتة', 'لبدة'], datasets: [{ label: '2024', data: [113300,38060,39400], backgroundColor: '#7f8c8d' }, { label: '2025', data: [275000,77500,40200], backgroundColor: '#d4af37' }] } });
-  new Chart(document.getElementById('transportPieChart'), { type: 'pie', data: { labels: ['بري (1,679,569)', 'جوي (1,152,479)', 'بحري (1,595)'], datasets: [{ data: [1679569,1152479,1595], backgroundColor: ['#2c7a4d','#1e5a88','#e67e22'] }] } });
-  new Chart(document.getElementById('economyTrendChart'), { type: 'line', data: { labels: [2021,2022,2023,2024,2025], datasets: [{ label: 'الإيرادات المحلية (مليار)', data: [0.65,0.74,0.92,1.08,1.25], borderColor: '#1e5a88' }, { label: 'الأثر الكلي (مليار)', data: [0.68,0.78,0.97,1.15,1.35], borderColor: '#d4af37' }] } });
-  
-  // New charts for national report
-  new Chart(document.getElementById('ageGroupChart'), { type: 'bar', data: { labels: ['18-24', '25-34', '35-44', '45+'], datasets: [{ label: 'النسبة المئوية', data: [22, 45, 23, 10], backgroundColor: '#1e5a88', borderRadius: 8 }] } });
-  new Chart(document.getElementById('interestsChart'), { type: 'bar', data: { labels: ['مغامرة', 'ثقافة/تاريخ', 'طبيعة', 'شعب محلي', 'مطبخ'], datasets: [{ label: 'الأهمية %', data: [92, 88, 85, 78, 65], backgroundColor: '#d4af37', borderRadius: 8 }] } });
-  new Chart(document.getElementById('servicesRatingChart'), { type: 'radar', data: { labels: ['الضيافة', 'الأمان', 'المواقع الأثرية', 'الإجراءات', 'البنية التحتية', 'الإنترنت'], datasets: [{ label: 'التقييم /10', data: [9.1, 7.8, 9.5, 4.3, 5.2, 6.0], backgroundColor: 'rgba(212,175,55,0.2)', borderColor: '#d4af37', borderWidth: 2 }] } });
-  new Chart(document.getElementById('barriersChart'), { type: 'bar', data: { labels: ['التأشيرة', 'القيود الأمنية', 'ضعف التسويق', 'المواصلات', 'السكن'], datasets: [{ label: 'نسبة الشكاوى %', data: [80, 68, 55, 42, 30], backgroundColor: '#c0392b', borderRadius: 8 }] } });
-}
-
-function exportCSV() {
-  const metrics = computeMetrics();
-  let rows = [["المؤشر","القيمة"], ["مرافق الإيواء",777], ["فنادق",384], ["شقق فندقية",258], ["قرى سياحية",135], ["نزلاء الفنادق",373843], ["السياح الدوليون",UNWTO_DATA.tourists], ["إجمالي الإيرادات (مليار)",(metrics.totalRevenue/1e9).toFixed(3)], ["مساهمة الناتج المحلي (%)",metrics.gdpShare.toFixed(2)]];
-  let csv = rows.map(r=>r.join(",")).join("\n");
-  const blob = new Blob(["\uFEFF"+csv], {type:"text/csv;charset=utf-8"});
-  const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = "libya_tourism_2025.csv"; link.click(); URL.revokeObjectURL(link.href);
-}
-function initTabs() {
-  const links = document.querySelectorAll('.nav a');
-  const contents = document.querySelectorAll('.tab-content');
-  links.forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const tabId = link.getAttribute('data-tab'); links.forEach(l => l.classList.remove('active')); link.classList.add('active'); contents.forEach(c => c.classList.remove('active')); document.getElementById(tabId).classList.add('active'); if(window.innerWidth <= 992) document.getElementById('sidebar').classList.remove('active'); }); });
-}
-document.getElementById('contrastBtn')?.addEventListener('click', () => document.body.classList.toggle('high-contrast'));
-document.getElementById('menuToggle')?.addEventListener('click', () => document.getElementById('sidebar').classList.toggle('active'));
-document.getElementById('refreshBtn')?.addEventListener('click', () => location.reload());
-document.getElementById('exportBtn')?.addEventListener('click', exportCSV);
-document.getElementById('worstBtn')?.addEventListener('click', () => setScenario('worst'));
-document.getElementById('baseBtn')?.addEventListener('click', () => setScenario('base'));
-document.getElementById('bestBtn')?.addEventListener('click', () => setScenario('best'));
-window.addEventListener('scroll', () => { const btn=document.getElementById('backToTop'); if(window.scrollY>300) btn.classList.add('active'); else btn.classList.remove('active'); });
-document.getElementById('backToTop')?.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-let progress = 0; const intv = setInterval(() => { progress += Math.random()*15; if(progress>=100) { clearInterval(intv); document.querySelector('.progress-bar').style.opacity='0'; } document.querySelector('.progress-bar').style.width=progress+'%'; }, 100);
-$(document).ready(() => { initAllCharts(); initTabs(); renderDecisionCards(); setScenario('base'); });
-</script>
+  <script src="../src/js/app.js"></script>
 </body>
 </html>
