@@ -1,236 +1,98 @@
-from fastapi import FastAPI, HTTPException
+from __future__ import annotations
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import json
-from pathlib import Path
+
+from app.core.config import (
+    ALLOWED_ORIGINS,
+    APP_DESCRIPTION,
+    APP_NAME,
+    APP_NAME_AR,
+    APP_SHORT_NAME,
+    APP_VERSION,
+    DEFAULT_DATA_YEAR,
+    ENVIRONMENT,
+    FORECAST_TARGET_YEAR,
+)
+from app.routers import cities, forecast, kpis
+from app.services.data_service import (
+    get_data_status,
+    validate_all_data,
+)
 
 
 app = FastAPI(
-    title="Libya Tourism KPI Platform",
-    description="National Tourism Indicators Platform - Libya",
-    version="1.0.0"
+    title=APP_NAME,
+    description=APP_DESCRIPTION,
+    version=APP_VERSION,
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json",
 )
+
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "tourism_2025.json"
+
+app.include_router(kpis.router)
+app.include_router(cities.router)
+app.include_router(forecast.router)
 
 
-def load_data():
-    with open(DATA_PATH, "r", encoding="utf-8") as file:
-        return json.load(file)
-
-
-def calculate_city_metrics(city, national_total_guests):
-    total = city.get("total_guests", 0)
-    accommodation_total = city.get("accommodation_total", 0)
-
+@app.get("/", tags=["System"])
+def home() -> dict[str, object]:
+    """
+    معلومات المنصة الأساسية.
+    """
     return {
-        **city,
-        "share_percent": round(total / national_total_guests * 100, 2) if national_total_guests else 0,
-        "domestic_share_percent": round(city.get("libyans", 0) / total * 100, 2) if total else 0,
-        "arab_share_percent": round(city.get("arabs", 0) / total * 100, 2) if total else 0,
-        "foreign_share_percent": round(city.get("foreigners", 0) / total * 100, 2) if total else 0,
-        "accommodation_structure": {
-            "hotels_percent": round(city.get("hotels", 0) / accommodation_total * 100, 2) if accommodation_total else 0,
-            "hotel_apartments_percent": round(city.get("hotel_apartments", 0) / accommodation_total * 100, 2) if accommodation_total else 0,
-            "tourist_villages_percent": round(city.get("tourist_villages", 0) / accommodation_total * 100, 2) if accommodation_total else 0
-        }
-    }
-
-
-@app.get("/")
-def home():
-    return {
-        "system": "Libya Tourism KPI Platform",
+        "system": APP_NAME,
+        "system_ar": APP_NAME_AR,
+        "short_name": APP_SHORT_NAME,
+        "version": APP_VERSION,
+        "environment": ENVIRONMENT,
         "status": "running",
-        "version": "1.0.0",
-        "documentation": "/docs"
-    }
-
-
-@app.get("/api/kpis")
-def get_kpis():
-    return load_data()
-
-
-@app.get("/api/summary")
-def get_summary():
-    data = load_data()
-
-    cities = data.get("cities", [])
-    total_city_guests = sum(city.get("total_guests", 0) for city in cities)
-
-    return {
-        "year": data["year"],
-        "international_tourists": data["international_tourists"],
-        "tourism_trips": data["tourism_trips"],
-        "hotel_guests": data["hotel_guests"],
-        "total_city_guests": total_city_guests,
-        "hotels": data["hotels"],
-        "hotel_apartments": data["hotel_apartments"],
-        "hotels_and_apartments": data["hotels_and_apartments"],
-        "tourist_villages": data["tourist_villages"],
-        "tourism_companies": data["tourism_companies"],
-        "heritage_visitors": data["heritage_visitors"],
-        "summer_revenue_lyd": data["summer_revenue_lyd"]
-    }
-
-
-@app.get("/api/continents")
-def get_continents():
-    data = load_data()
-    continents = data.get("continents", {})
-    total = sum(continents.values())
-
-    return {
-        "total": total,
-        "continents": [
-            {
-                "name_en": "Europe",
-                "name_ar": "أوروبا",
-                "value": continents.get("Europe", 0),
-                "share_percent": round(continents.get("Europe", 0) / total * 100, 2) if total else 0
-            },
-            {
-                "name_en": "Asia",
-                "name_ar": "آسيا",
-                "value": continents.get("Asia", 0),
-                "share_percent": round(continents.get("Asia", 0) / total * 100, 2) if total else 0
-            },
-            {
-                "name_en": "Africa",
-                "name_ar": "أفريقيا",
-                "value": continents.get("Africa", 0),
-                "share_percent": round(continents.get("Africa", 0) / total * 100, 2) if total else 0
-            },
-            {
-                "name_en": "Americas",
-                "name_ar": "الأمريكيتين",
-                "value": continents.get("Americas", 0),
-                "share_percent": round(continents.get("Americas", 0) / total * 100, 2) if total else 0
-            },
-            {
-                "name_en": "Australia",
-                "name_ar": "أستراليا",
-                "value": continents.get("Australia", 0),
-                "share_percent": round(continents.get("Australia", 0) / total * 100, 2) if total else 0
-            }
-        ]
-    }
-
-
-@app.get("/api/cities")
-def get_all_cities():
-    data = load_data()
-
-    cities = data.get("cities", [])
-    total_guests = sum(city.get("total_guests", 0) for city in cities)
-
-    result = [
-        calculate_city_metrics(city, total_guests)
-        for city in cities
-    ]
-
-    result = sorted(result, key=lambda item: item["total_guests"], reverse=True)
-
-    return {
-        "year": data["year"],
-        "total_guests": total_guests,
-        "cities_count": len(result),
-        "cities": result
-    }
-
-
-@app.get("/api/cities/{city_id}")
-def get_city_by_id(city_id: str):
-    data = load_data()
-
-    cities = data.get("cities", [])
-    total_guests = sum(city.get("total_guests", 0) for city in cities)
-
-    for city in cities:
-        if city["id"] == city_id:
-            return calculate_city_metrics(city, total_guests)
-
-    raise HTTPException(
-        status_code=404,
-        detail={
-            "error": "City not found",
-            "city_id": city_id
-        }
-    )
-
-
-@app.get("/api/cities/tripoli/legacy")
-def tripoli_dashboard_legacy():
-    data = load_data()
-
-    tripoli = data["tripoli"]
-    total = tripoli["accommodation_total"]
-
-    return {
-        "city": "Tripoli",
-        "city_ar": "طرابلس",
-        "companies": tripoli["companies"],
-        "offices": tripoli["offices"],
-        "accommodation_total": total,
-        "hotels": tripoli["hotels"],
-        "hotel_apartments": tripoli["hotel_apartments"],
-        "tourist_villages": tripoli["tourist_villages"],
-        "hotel_guests": tripoli["hotel_guests"],
-        "shares": {
-            "hotels_percent": round(tripoli["hotels"] / total * 100, 1) if total else 0,
-            "hotel_apartments_percent": round(tripoli["hotel_apartments"] / total * 100, 1) if total else 0,
-            "tourist_villages_percent": round(tripoli["tourist_villages"] / total * 100, 1) if total else 0
-        }
-    }
-
-
-@app.get("/api/forecast/2035")
-def forecast_2035():
-    data = load_data()
-
-    base_year = 2025
-    target_year = 2035
-    years = target_year - base_year
-
-    international_tourists_growth = 0.08
-    hotel_guests_growth = 0.08
-    hotels_growth = 0.04
-    companies_growth = 0.07
-    heritage_growth = 0.06
-    summer_revenue_growth = 0.10
-
-    return {
-        "base_year": base_year,
-        "target_year": target_year,
-        "assumptions": {
-            "international_tourists_growth": international_tourists_growth,
-            "hotel_guests_growth": hotel_guests_growth,
-            "hotels_growth": hotels_growth,
-            "companies_growth": companies_growth,
-            "heritage_growth": heritage_growth,
-            "summer_revenue_growth": summer_revenue_growth
+        "default_data_year": DEFAULT_DATA_YEAR,
+        "forecast_target_year": FORECAST_TARGET_YEAR,
+        "documentation": {
+            "swagger": "/docs",
+            "redoc": "/redoc",
+            "openapi": "/openapi.json",
         },
-        "international_tourists_2035": round(data["international_tourists"] * ((1 + international_tourists_growth) ** years)),
-        "hotel_guests_2035": round(data["hotel_guests"] * ((1 + hotel_guests_growth) ** years)),
-        "hotels_2035": round(data["hotels"] * ((1 + hotels_growth) ** years)),
-        "companies_2035": round(data["tourism_companies"] * ((1 + companies_growth) ** years)),
-        "heritage_visitors_2035": round(data["heritage_visitors"] * ((1 + heritage_growth) ** years)),
-        "summer_revenue_lyd_2035": round(data["summer_revenue_lyd"] * ((1 + summer_revenue_growth) ** years))
     }
 
 
-@app.get("/api/health")
-def health_check():
+@app.get("/api/health", tags=["System"])
+def health() -> dict[str, object]:
+    """
+    فحص حالة التطبيق وملفات البيانات والسجل الوطني للمؤشرات.
+    """
+    data_status = get_data_status()
+    validation = validate_all_data()
+
+    errors_count = validation.get("errors_count", 0)
+    warnings_count = validation.get("warnings_count", 0)
+
+    if errors_count > 0:
+        overall_status = "unhealthy"
+    elif warnings_count > 0:
+        overall_status = "healthy_with_warnings"
+    else:
+        overall_status = "healthy"
+
     return {
-        "status": "healthy",
-        "data_file": str(DATA_PATH),
-        "data_exists": DATA_PATH.exists()
+        "status": overall_status,
+        "application": {
+            "name": APP_NAME,
+            "short_name": APP_SHORT_NAME,
+            "version": APP_VERSION,
+            "environment": ENVIRONMENT,
+        },
+        "data": data_status,
+        "validation": validation,
     }
