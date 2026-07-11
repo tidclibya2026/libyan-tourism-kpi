@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="المنصة الوطنية الذكية للمؤشرات السياحية الليبية"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b2341"
+    >
+
+    <title>
+        لوحة المؤشرات السياحية الوطنية | ليبيا
+    </title>
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIINfQ3ynh17S+FYW0IYd4kMZV3WfS+M0jM="
+        crossorigin=""
+    >
+
+    <!-- Local stylesheet -->
+    <link
+        rel="stylesheet"
+        href="./assets/css/dashboard.css"
+    >
+</head>
+
+<body>
+    <!-- ==================================================
+         Accessibility
+    =================================================== -->
+
+    <a
+        class="skip-link"
+        href="#main-content"
+    >
+        الانتقال إلى المحتوى الرئيسي
+    </a>
+
+
+    <!-- ==================================================
+         Loading screen
+    =================================================== -->
+
+    <div
+        id="loading-screen"
+        class="loading-screen"
+        role="status"
+        aria-live="polite"
+    >
+        <div class="loading-screen__content">
+            <div
+                class="loading-spinner"
+                aria-hidden="true"
+            ></div>
+
+            <h2>
+                جاري تحميل المؤشرات الوطنية
+            </h2>
+
+            <p>
+                يتم الاتصال بمحرك المؤشرات السياحية…
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ==================================================
+         Application shell
+    =================================================== -->
+
+    <div class="app-shell">
+
+        <!-- ==============================================
+             Header
+        =============================================== -->
+
+        <header class="government-header">
+            <div class="government-header__identity">
+
+                <div
+                    class="national-mark"
+                    aria-hidden="true"
+                >
+                    LY
+                </div>
+
+                <div class="government-header__titles">
+                    <p class="government-header__country">
+                        دولة ليبيا
+                    </p>
+
+                    <p class="government-header__ministry">
+                        وزارة السياحة والصناعات التقليدية
+                    </p>
+
+                    <p class="government-header__organization">
+                        مركز المعلومات والتوثيق السياحي
+                    </p>
+                </div>
+            </div>
+
+            <div class="government-header__platform">
+                <p class="government-header__platform-label">
+                    المنصة الوطنية الذكية
+                </p>
+
+                <h1>
+                    لوحة المؤشرات السياحية الوطنية
+                </h1>
+
+                <p>
+                    من المعلومة إلى القرار
+                </p>
+            </div>
+        </header>
+
+
+        <!-- ==============================================
+             Navigation and system status
+        =============================================== -->
+
+        <nav
+            class="top-navigation"
+            aria-label="التنقل الرئيسي"
+        >
+            <div class="top-navigation__links">
+                <a
+                    class="top-navigation__link is-active"
+                    href="#overview"
+                >
+                    نظرة وطنية
+                </a>
+
+                <a
+                    class="top-navigation__link"
+                    href="#markets"
+                >
+                    الأسواق السياحية
+                </a>
+
+                <a
+                    class="top-navigation__link"
+                    href="#cities"
+                >
+                    المدن والفروع
+                </a>
+
+                <a
+                    class="top-navigation__link"
+                    href="#map-section"
+                >
+                    الخريطة
+                </a>
+
+                <a
+                    class="top-navigation__link"
+                    href="#data-quality"
+                >
+                    جودة البيانات
+                </a>
+            </div>
+
+            <div
+                id="app-status"
+                class="system-status"
+                data-status="loading"
+            >
+                <span
+                    class="system-status__dot"
+                    aria-hidden="true"
+                ></span>
+
+                <span id="app-status-text">
+                    جاري الاتصال
+                </span>
+            </div>
+        </nav>
+
+
+        <!-- ==============================================
+             Error banner
+        =============================================== -->
+
+        <div
+            id="error-banner"
+            class="error-banner"
+            role="alert"
+            hidden
+        >
+            <div>
+                <strong>
+                    تعذر تحميل بيانات اللوحة
+                </strong>
+
+                <p id="error-message">
+                    حدث خطأ غير متوقع أثناء الاتصال بالخادم.
+                </p>
+            </div>
+
+            <button
+                id="error-retry-button"
+                class="button button--danger"
+                type="button"
+            >
+                إعادة المحاولة
+            </button>
+        </div>
+
+
+        <!-- ==============================================
+             Main content
+        =============================================== -->
+
+        <main
+            id="main-content"
+            class="dashboard-main"
+        >
+
+            <!-- ==========================================
+                 Dashboard controls
+            =========================================== -->
+
+            <section
+                class="dashboard-toolbar"
+                aria-label="أدوات لوحة المؤشرات"
+            >
+                <div>
+                    <p class="section-eyebrow">
+                        البيانات الوطنية
+                    </p>
+
+                    <h2>
+                        المؤشرات السياحية الليبية
+                    </h2>
+
+                    <p class="dashboard-toolbar__description">
+                        عرض تنفيذي للطلب السياحي والطاقة الإيوائية
+                        والأسواق والمدن وجودة البيانات.
+                    </p>
+                </div>
+
+                <div class="dashboard-toolbar__actions">
+                    <label
+                        class="field-group"
+                        for="data-year"
+                    >
+                        <span>
+                            السنة المرجعية
+                        </span>
+
+                        <select
+                            id="data-year"
+                            name="data-year"
+                        >
+                            <option value="2025" selected>
+                                2025
+                            </option>
+                        </select>
+                    </label>
+
+                    <button
+                        id="refresh-button"
+                        class="button button--secondary"
+                        type="button"
+                    >
+                        تحديث البيانات
+                    </button>
+
+                    <button
+                        id="print-button"
+                        class="button button--primary"
+                        type="button"
+                    >
+                        طباعة التقرير
+                    </button>
+                </div>
+            </section>
+
+
+            <!-- ==========================================
+                 Executive status strip
+            =========================================== -->
+
+            <section
+                class="executive-strip"
+                aria-label="حالة البيانات"
+            >
+                <article class="executive-strip__item">
+                    <span>
+                        السنة المرجعية
+                    </span>
+
+                    <strong id="executive-reference-year">
+                        2025
+                    </strong>
+                </article>
+
+                <article class="executive-strip__item">
+                    <span>
+                        المؤشرات المحسوبة
+                    </span>
+
+                    <strong id="calculated-indicators-count">
+                        —
+                    </strong>
+                </article>
+
+                <article class="executive-strip__item">
+                    <span>
+                        مؤشرات تنتظر البيانات
+                    </span>
+
+                    <strong id="unavailable-indicators-count">
+                        —
+                    </strong>
+                </article>
+
+                <article class="executive-strip__item">
+                    <span>
+                        حالة المطابقة
+                    </span>
+
+                    <strong id="reconciliation-status">
+                        قيد الفحص
+                    </strong>
+                </article>
+
+                <article class="executive-strip__item">
+                    <span>
+                        آخر تحديث
+                    </span>
+
+                    <strong id="last-update">
+                        —
+                    </strong>
+                </article>
+            </section>
+
+
+            <!-- ==========================================
+                 National overview
+            =========================================== -->
+
+            <section
+                id="overview"
+                class="dashboard-section"
+            >
+                <header class="section-header">
+                    <div>
+                        <p class="section-eyebrow">
+                            الملخص التنفيذي
+                        </p>
+
+                        <h2>
+                            المؤشرات الوطنية الرئيسية
+                        </h2>
+                    </div>
+
+                    <p class="section-header__note">
+                        القيم معروضة وفق السنة المرجعية ومصادر
+                        البيانات المسجلة في المنصة.
+                    </p>
+                </header>
+
+                <div class="kpi-grid">
+
+                    <article
+                        class="kpi-card"
+                        data-kpi="international_tourists"
+                    >
+                        <div class="kpi-card__header">
+                            <span class="kpi-card__icon">
+                                01
+                            </span>
+
+                            <span class="kpi-card__status">
+                                دولي
+                            </span>
+                        </div>
+
+                        <p class="kpi-card__label">
+                            السياح الدوليون
+                        </p>
+
+                        <strong
+                            id="kpi-international-tourists"
+                            class="kpi-card__value"
+                        >
+                            —
+                        </strong>
+
+                        <p class="kpi-card__meta">
+                            سائح خلال السنة المرجعية
+                        </p>
+                    </article>
+
+
+                    <article
+                        class="kpi-card"
+                        data-kpi="accommodation_guests"
+                    >
+                        <div class="kpi-card__header">
+                            <span class="kpi-card__icon">
+                                02
+                            </span>
+
+                            <span class="kpi-card__status">
+                                إيواء
+                            </span>
+                        </div>
+
+                        <p class="kpi-card__label">
+                            نزلاء منشآت الإيواء
+                        </p>
+
+                        <strong
+                            id="kpi-accommodation-guests"
+                            class="kpi-card__value"
+                        >
+                            —
+                        </strong>
+
+                        <p class="kpi-card__meta">
+                            ليبيون وعرب وأجانب
+                        </p>
+                    </article>
+
+
+                    <article
+                        class="kpi-card"
+                        data-kpi="heritage_visitors"
+                    >
+                        <div class="kpi-card__header">
+                            <span class="kpi-card__icon">
+                                03
+                            </span>
+
+                            <span class="kpi-card__status">
+                                تراث
+                            </span>
+                        </div>
+
+                        <p class="kpi-card__label">
+                            زوار التراث والمتاحف
+                        </p>
+
+                        <strong
+                            id="kpi-heritage-visitors"
+                            class="kpi-card__value"
+                        >
+                            —
+                        </strong>
+
+                        <p class="kpi-card__meta">
+                            المواقع والمتاحف المسجلة
+                        </p>
+                    </article>
+
+
+                    <article
+                        class="kpi-card"
+                        data-kpi="air_passengers"
+                    >
+                        <div class="kpi-card__header">
+                            <span class="kpi-card__icon">
+                                04
+                            </span>
+
+                            <span class="kpi-card__status">
+                                نقل
+                            </span>
+                        </div>
+
+                        <p class="kpi-card__label">
+                            المسافرون جوًا
+                        </p>
+
+                        <strong
+                            id="kpi-air-passengers"
+                            class="kpi-card__value"
+                        >
+                            —
+                        </strong>
+
+                        <p class="kpi-card__meta">
+                            عبر المطارات الليبية
+                        </p>
+                    </article>
+
+
+                    <article
+                        class="kpi-card"
+                        data-kpi="tourism_companies"
+                    >
+                        <div class="kpi-card__header">
+                            <span class="kpi-card__icon">
+                                05
+                            </span>
+
+                            <span class="kpi-card__status">
+                                أعمال
+                            </span>
+                        </div>
+
+                        <p class="kpi-card__label">
+                            الشركات والمكاتب السياحية
+                        </p>
+
+                        <strong
+                            id="kpi-tourism-companies"
+                            class="kpi-card__value"
+                        >
+                            —
+                        </strong>
+
+                        <p class="kpi-card__meta">
+                            الشركات والمكاتب المسجلة
+                        </p>
+                    </article>
+
+
+                    <article
+                        class="kpi-card"
+                        data-kpi="flights_count"
+                    >
+                        <div class="kpi-card__header">
+                            <span class="kpi-card__icon">
+                                06
+                            </span>
+
+                            <span class="kpi-card__status">
+                                رحلات
+                            </span>
+                        </div>
+
+                        <p class="kpi-card__label">
+                            الرحلات الجوية
+                        </p>
+
+                        <strong
+                            id="kpi-flights"
+                            class="kpi-card__value"
+                        >
+                            —
+                        </strong>
+
+                        <p class="kpi-card__meta">
+                            الرحلات الداخلية والدولية
+                        </p>
+                    </article>
+
+                </div>
+            </section>
+
+
+            <!-- ==========================================
+                 Charts
+            =========================================== -->
+
+            <section
+                id="markets"
+                class="dashboard-section"
+            >
+                <header class="section-header">
+                    <div>
+                        <p class="section-eyebrow">
+                            التحليل السوقي
+                        </p>
+
+                        <h2>
+                            توزيع الطلب السياحي
+                        </h2>
+                    </div>
+                </header>
+
+                <div class="analytics-grid">
+
+                    <article class="panel panel--wide">
+                        <header class="panel__header">
+                            <div>
+                                <p class="panel__eyebrow">
+                                    الأسواق المصدرة
+                                </p>
+
+                                <h3>
+                                    السياح الدوليون حسب القارة
+                                </h3>
+                            </div>
+                        </header>
+
+                        <div class="chart-container">
+                            <canvas
+                                id="continents-chart"
+                                aria-label="رسم السياح حسب القارة"
+                            ></canvas>
+                        </div>
+                    </article>
+
+
+                    <article class="panel">
+                        <header class="panel__header">
+                            <div>
+                                <p class="panel__eyebrow">
+                                    التركيب السوقي
+                                </p>
+
+                                <h3>
+                                    توزيع نزلاء الإيواء
+                                </h3>
+                            </div>
+                        </header>
+
+                        <div class="chart-container">
+                            <canvas
+                                id="guest-mix-chart"
+                                aria-label="رسم توزيع النزلاء"
+                            ></canvas>
+                        </div>
+                    </article>
+
+
+                    <article class="panel panel--wide">
+                        <header class="panel__header">
+                            <div>
+                                <p class="panel__eyebrow">
+                                    الأداء المكاني
+                                </p>
+
+                                <h3>
+                                    أعلى المدن حسب عدد النزلاء
+                                </h3>
+                            </div>
+                        </header>
+
+                        <div class="chart-container">
+                            <canvas
+                                id="cities-chart"
+                                aria-label="رسم ترتيب المدن"
+                            ></canvas>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+
+            <!-- ==========================================
+                 Cities table
+            =========================================== -->
+
+            <section
+                id="cities"
+                class="dashboard-section"
+            >
+                <header class="section-header">
+                    <div>
+                        <p class="section-eyebrow">
+                            التحليل الجغرافي
+                        </p>
+
+                        <h2>
+                            ترتيب المدن والفروع السياحية
+                        </h2>
+                    </div>
+                </header>
+
+                <article class="panel">
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <caption class="sr-only">
+                                ترتيب المدن حسب عدد النزلاء
+                            </caption>
+
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        الترتيب
+                                    </th>
+
+                                    <th scope="col">
+                                        المدينة
+                                    </th>
+
+                                    <th scope="col">
+                                        إجمالي النزلاء
+                                    </th>
+
+                                    <th scope="col">
+                                        ليبيون
+                                    </th>
+
+                                    <th scope="col">
+                                        عرب
+                                    </th>
+
+                                    <th scope="col">
+                                        أجانب
+                                    </th>
+
+                                    <th scope="col">
+                                        الحصة الوطنية
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="cities-table-body">
+                                <tr>
+                                    <td
+                                        colspan="7"
+                                        class="table-empty-state"
+                                    >
+                                        جاري تحميل بيانات المدن…
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+
+            <!-- ==========================================
+                 GIS map
+            =========================================== -->
+
+            <section
+                id="map-section"
+                class="dashboard-section"
+            >
+                <header class="section-header">
+                    <div>
+                        <p class="section-eyebrow">
+                            التحليل المكاني
+                        </p>
+
+                        <h2>
+                            الخريطة السياحية التفاعلية
+                        </h2>
+                    </div>
+
+                    <p class="section-header__note">
+                        حجم العلامة يعكس إجمالي النزلاء
+                        في المدينة أو الفرع.
+                    </p>
+                </header>
+
+                <article class="panel panel--map">
+                    <div
+                        id="tourism-map"
+                        class="tourism-map"
+                        aria-label="خريطة مؤشرات المدن الليبية"
+                    ></div>
+                </article>
+            </section>
+
+
+            <!-- ==========================================
+                 Data quality
+            =========================================== -->
+
+            <section
+                id="data-quality"
+                class="dashboard-section"
+            >
+                <header class="section-header">
+                    <div>
+                        <p class="section-eyebrow">
+                            الحوكمة الإحصائية
+                        </p>
+
+                        <h2>
+                            جودة البيانات وسلامة المؤشرات
+                        </h2>
+                    </div>
+                </header>
+
+                <div class="quality-grid">
+
+                    <article class="quality-card">
+                        <span>
+                            حالة النظام
+                        </span>
+
+                        <strong id="quality-system-status">
+                            قيد الفحص
+                        </strong>
+                    </article>
+
+                    <article class="quality-card">
+                        <span>
+                            أخطاء التحقق
+                        </span>
+
+                        <strong id="quality-errors-count">
+                            —
+                        </strong>
+                    </article>
+
+                    <article class="quality-card">
+                        <span>
+                            تحذيرات البيانات
+                        </span>
+
+                        <strong id="quality-warnings-count">
+                            —
+                        </strong>
+                    </article>
+
+                    <article class="quality-card">
+                        <span>
+                            تطابق مجموع المدن
+                        </span>
+
+                        <strong id="quality-cities-match">
+                            —
+                        </strong>
+                    </article>
+
+                    <article class="quality-card">
+                        <span>
+                            تطابق مجموع القارات
+                        </span>
+
+                        <strong id="quality-continents-match">
+                            —
+                        </strong>
+                    </article>
+
+                </div>
+            </section>
+
+        </main>
+
+
+        <!-- ==============================================
+             Footer
+        =============================================== -->
+
+        <footer class="government-footer">
+            <div>
+                <strong>
+                    المنصة الوطنية الذكية للمؤشرات السياحية الليبية
+                </strong>
+
+                <p>
+                    مركز المعلومات والتوثيق السياحي
+                </p>
+            </div>
+
+            <div class="government-footer__meta">
+                <span>
+                    المعيار الوطني LTKS
+                </span>
+
+                <span>
+                    الإصدار 1.0
+                </span>
+
+                <span>
+                    السنة المرجعية 2025
+                </span>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <!-- ==================================================
+         External JavaScript libraries
+    =================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"
+        defer
+    ></script>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+        defer
+    ></script>
+
+
+    <!-- ==================================================
+         Local JavaScript
+    =================================================== -->
+
+    <script
+        src="./assets/js/config.js"
+        defer
+    ></script>
+
+    <script
+        src="./assets/js/api.js"
+        defer
+    ></script>
+
+    <script
+        src="./assets/js/charts.js"
+        defer
+    ></script>
+
+    <script
+        src="./assets/js/map.js"
+        defer
+    ></script>
+
+    <script
+        src="./assets/js/dashboard.js"
+        defer
+    ></script>
+</body>
+</html>
