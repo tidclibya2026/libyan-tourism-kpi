@@ -1,0 +1,209 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+      - "data/**"
+      - ".github/workflows/backend-ci.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+      - "data/**"
+      - ".github/workflows/backend-ci.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONUNBUFFERED: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  ENVIRONMENT: "test"
+  DEBUG: "false"
+  DEFAULT_DATA_YEAR: "2025"
+
+jobs:
+  backend-tests:
+    name: Python 3.13 Backend Tests
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 15
+
+    steps:
+      # ===================================================
+      # Repository checkout
+      # ===================================================
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      # ===================================================
+      # Python environment
+      # ===================================================
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: "pip"
+          cache-dependency-path: "backend/requirements.txt"
+
+      - name: Display environment information
+        run: |
+          python --version
+          python -m pip --version
+
+      # ===================================================
+      # Dependencies
+      # ===================================================
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      # ===================================================
+      # JSON syntax validation
+      # ===================================================
+
+      - name: Validate national KPI data
+        run: |
+          python -m json.tool data/core/national_kpis_2025.json > /dev/null
+
+      - name: Validate cities data
+        run: |
+          python -m json.tool data/core/cities_2025.json > /dev/null
+
+      - name: Validate continents data
+        run: |
+          python -m json.tool data/core/continents_2025.json > /dev/null
+
+      - name: Validate data sources registry
+        run: |
+          python -m json.tool data/metadata/data_sources.json > /dev/null
+
+      - name: Validate indicator registry
+        run: |
+          python -m json.tool data/metadata/indicator_registry.json > /dev/null
+
+      # ===================================================
+      # Python source validation
+      # ===================================================
+
+      - name: Compile backend source
+        working-directory: backend
+        run: |
+          python -m compileall -q app
+
+      - name: Test FastAPI application import
+        working-directory: backend
+        run: |
+          python -c "from app.main import app; print('Application:', app.title); print('Routes:', len(app.routes))"
+
+      # ===================================================
+      # Data governance validation
+      # ===================================================
+
+      - name: Validate platform data
+        working-directory: backend
+        run: |
+          python - <<'PY'
+          import json
+
+          from app.services.data_service import validate_all_data
+
+          result = validate_all_data()
+
+          print(
+              json.dumps(
+                  result,
+                  ensure_ascii=False,
+                  indent=2,
+              )
+          )
+
+          errors_count = int(
+              result.get("errors_count", 0) or 0
+          )
+
+          assert errors_count == 0, (
+              f"Platform data validation failed: {result}"
+          )
+          PY
+
+      # ===================================================
+      # KPI contract validation
+      # ===================================================
+
+      - name: Validate calculated KPI response
+        working-directory: backend
+        run: |
+          python - <<'PY'
+          from app.schemas.kpi import KPIValue
+          from app.services.kpi_engine import calculate_indicator
+
+          result = calculate_indicator(
+              "passengers_per_flight"
+          )
+
+          validated = KPIValue.model_validate(result)
+
+          assert validated.value is not None
+
+          print(
+              "Calculated KPI valid:",
+              validated.code,
+              validated.value,
+          )
+          PY
+
+      - name: Validate unavailable KPI response
+        working-directory: backend
+        run: |
+          python - <<'PY'
+          from app.schemas.kpi import KPIValue
+          from app.services.kpi_engine import calculate_indicator
+
+          result = calculate_indicator(
+              "room_occupancy_rate"
+          )
+
+          validated = KPIValue.model_validate(result)
+
+          assert validated.value is None
+          assert (
+              validated.calculation_status
+              == "unavailable"
+          )
+
+          print(
+              "Unavailable KPI handling valid:",
+              validated.code,
+          )
+          PY
+
+      # ===================================================
+      # Automated tests and coverage
+      # ===================================================
+
+      - name: Run automated tests
+        working-directory: backend
+        run: |
+          python -m pytest \
+            --junitxml=test-results.xml \
+            --cov=app \
+            --cov-report=term-missing \
+            --cov-report=xml:coverage.xml \
+            --cov-fail-under=70

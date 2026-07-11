@@ -1,5 +1,8 @@
-fastapi
-uvicorn
-pydantic
-pandas
-python-multipart
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.34,<1.0
+pydantic>=2.13,<3.0
+httpx>=0.28,<1.0
+anyio>=4.14,<5.0
+
+pytest>=9.1,<10.0
+pytest-cov>=7.1,<8.0
