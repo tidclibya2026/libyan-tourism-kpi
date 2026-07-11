@@ -1,0 +1,36 @@
+{
+  "year": 2025,
+  "total": 2752,
+  "items": [
+    {
+      "id": "europe",
+      "name_ar": "أوروبا",
+      "name_en": "Europe",
+      "tourists": 1243
+    },
+    {
+      "id": "asia",
+      "name_ar": "آسيا",
+      "name_en": "Asia",
+      "tourists": 611
+    },
+    {
+      "id": "africa",
+      "name_ar": "أفريقيا",
+      "name_en": "Africa",
+      "tourists": 571
+    },
+    {
+      "id": "americas",
+      "name_ar": "الأمريكيتين",
+      "name_en": "Americas",
+      "tourists": 293
+    },
+    {
+      "id": "australia",
+      "name_ar": "أستراليا",
+      "name_en": "Australia",
+      "tourists": 34
+    }
+  ]
+}
