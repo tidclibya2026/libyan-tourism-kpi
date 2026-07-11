@@ -1,0 +1,1954 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "LTKS-REGISTRY-CORE",
+  "registry_name_ar": "السجل التشغيلي الأساسي للمؤشرات السياحية الليبية",
+  "registry_name_en": "Libyan Tourism Core Indicators Registry",
+  "standard_id": "LTKS",
+  "standard_name_ar": "المعيار الوطني الليبي للمؤشرات السياحية",
+  "standard_name_en": "Libyan Tourism KPI Standard",
+  "standard_version": "1.0.0-draft",
+  "country": "Libya",
+  "country_code": "LY",
+  "reference_year": 2025,
+  "last_updated": "2026-07-11",
+  "maintaining_organization_ar": "مركز المعلومات والتوثيق السياحي",
+  "maintaining_organization_en": "Tourism Information and Documentation Center",
+  "registry_status": "under_review",
+  "governance": {
+    "approval_authority_ar": "وزارة السياحة والصناعات التقليدية",
+    "technical_owner_ar": "مركز المعلومات والتوثيق السياحي",
+    "calculation_engine": "National Tourism KPI Engine",
+    "default_currency": "LYD",
+    "default_timezone": "Africa/Tripoli",
+    "default_language": "ar",
+    "supported_languages": [
+      "ar",
+      "en"
+    ],
+    "indicator_id_policy": "LTKS-{DOMAIN}-{SEQUENCE}",
+    "publication_rule_ar": "لا يُنشر أي مؤشر بصفة رسمية قبل اعتماد تعريفه ومعادلته ومصادره والتحقق من بيانات الإدخال.",
+    "change_control_ar": "أي تعديل على تعريف أو معادلة مؤشر يجب أن يسجل بإصدار جديد وسجل تغييرات معتمد."
+  },
+  "validation_rules": [
+    "indicator_id_must_be_unique",
+    "code_must_be_unique",
+    "source_ids_must_exist_in_data_sources_registry",
+    "measurement_unit_must_match_enums",
+    "category_must_match_enums",
+    "calculation_must_define_formula",
+    "ratio_indicators_must_define_denominator",
+    "published_indicators_must_be_approved_and_validated",
+    "forecast_indicators_must_document_method_and_scenario",
+    "sensitive_indicators_must_define_access_level"
+  ],
+  "summary": {
+    "indicator_count": 39,
+    "core_registry_target": 50,
+    "national_registry_target": 300,
+    "approved_count": 0,
+    "under_review_count": 17,
+    "draft_count": 22
+  },
+  "indicators": [
+    {
+      "indicator_id": "LTKS-DEM-001",
+      "code": "international_tourists",
+      "name_ar": "عدد السياح الدوليين",
+      "name_en": "International tourists",
+      "category": "tourism_demand",
+      "indicator_type": "output",
+      "measurement_unit": "tourists",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-PASSPORT-006"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(international_tourists)",
+        "numerator": "international_tourists",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "executive",
+        "publishable": true,
+        "dashboard_group": "الطلب السياحي",
+        "display_order": 1
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "UN_TOURISM"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "arrivals",
+        "international"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-DEM-002",
+      "code": "tourism_trips",
+      "name_ar": "عدد الرحلات السياحية",
+      "name_en": "Tourism trips",
+      "category": "tourism_demand",
+      "indicator_type": "output",
+      "measurement_unit": "trips",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(tourism_trips)",
+        "numerator": "tourism_trips",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الطلب السياحي",
+        "display_order": 2
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-DEM-003",
+      "code": "accommodation_guests",
+      "name_ar": "إجمالي نزلاء منشآت الإيواء",
+      "name_en": "Accommodation guests",
+      "category": "tourism_demand",
+      "indicator_type": "output",
+      "measurement_unit": "persons",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-BRANCH-002",
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(libyan_guests + arab_guests + foreign_guests)",
+        "numerator": "total_guests",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "high",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "executive",
+        "publishable": true,
+        "dashboard_group": "الطلب السياحي",
+        "display_order": 3
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "UN_TOURISM"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "guests",
+        "accommodation"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-DEM-004",
+      "code": "domestic_guest_share",
+      "name_ar": "نسبة النزلاء الليبيين",
+      "name_en": "Domestic guest share",
+      "category": "tourism_demand",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "neutral",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(libyan_guests / accommodation_guests) * 100",
+        "numerator": "libyan_guests",
+        "denominator": "accommodation_guests",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "high",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "التركيب السوقي",
+        "display_order": 4
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-DEM-005",
+      "code": "arab_guest_share",
+      "name_ar": "نسبة النزلاء العرب",
+      "name_en": "Arab guest share",
+      "category": "tourism_demand",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "neutral",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(arab_guests / accommodation_guests) * 100",
+        "numerator": "arab_guests",
+        "denominator": "accommodation_guests",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "high",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "التركيب السوقي",
+        "display_order": 5
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-DEM-006",
+      "code": "foreign_guest_share",
+      "name_ar": "نسبة النزلاء الأجانب",
+      "name_en": "Foreign guest share",
+      "category": "tourism_demand",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(foreign_guests / accommodation_guests) * 100",
+        "numerator": "foreign_guests",
+        "denominator": "accommodation_guests",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "high",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "التركيب السوقي",
+        "display_order": 6
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-DEM-007",
+      "code": "continent_market_share",
+      "name_ar": "الحصة السوقية حسب القارة",
+      "name_en": "Market share by continent",
+      "category": "tourism_demand",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "neutral",
+      "aggregation_method": "ratio",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-PASSPORT-006"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(tourists_from_continent / international_tourists) * 100",
+        "numerator": "tourists_from_continent",
+        "denominator": "international_tourists",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الأسواق المصدرة",
+        "display_order": 7
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "UN_TOURISM"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "continent",
+        "market_share"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-DEM-008",
+      "code": "annual_tourism_growth_rate",
+      "name_ar": "معدل النمو السنوي للطلب السياحي",
+      "name_en": "Annual tourism demand growth rate",
+      "category": "tourism_demand",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "formula",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "growth_rate",
+        "formula": "((current_value - previous_value) / previous_value) * 100",
+        "numerator": "current_value - previous_value",
+        "denominator": "previous_value",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الاتجاهات",
+        "display_order": 8
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-001",
+      "code": "hotels_count",
+      "name_ar": "عدد الفنادق",
+      "name_en": "Hotels count",
+      "category": "accommodation",
+      "indicator_type": "output",
+      "measurement_unit": "facilities",
+      "direction": "higher_is_better",
+      "aggregation_method": "distinct_count",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-BRANCH-002",
+        "SRC-LICENSE-004"
+      ],
+      "calculation": {
+        "method": "distinct_count",
+        "formula": "COUNT_DISTINCT(facility_id WHERE facility_type='hotel')",
+        "numerator": "facility_id",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "requires_field_verification",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الطاقة الإيوائية",
+        "display_order": 10
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-002",
+      "code": "hotel_apartments_count",
+      "name_ar": "عدد الشقق الفندقية",
+      "name_en": "Hotel apartments count",
+      "category": "accommodation",
+      "indicator_type": "output",
+      "measurement_unit": "facilities",
+      "direction": "higher_is_better",
+      "aggregation_method": "distinct_count",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-BRANCH-002",
+        "SRC-LICENSE-004"
+      ],
+      "calculation": {
+        "method": "distinct_count",
+        "formula": "COUNT_DISTINCT(facility_id WHERE facility_type='hotel_apartment')",
+        "numerator": "facility_id",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "requires_field_verification",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الطاقة الإيوائية",
+        "display_order": 11
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-003",
+      "code": "tourist_villages_count",
+      "name_ar": "عدد القرى السياحية",
+      "name_en": "Tourist villages count",
+      "category": "accommodation",
+      "indicator_type": "output",
+      "measurement_unit": "facilities",
+      "direction": "higher_is_better",
+      "aggregation_method": "distinct_count",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-BRANCH-002",
+        "SRC-LICENSE-004"
+      ],
+      "calculation": {
+        "method": "distinct_count",
+        "formula": "COUNT_DISTINCT(facility_id WHERE facility_type='tourist_village')",
+        "numerator": "facility_id",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "requires_field_verification",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الطاقة الإيوائية",
+        "display_order": 12
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-004",
+      "code": "rooms_count",
+      "name_ar": "عدد الغرف الفندقية",
+      "name_en": "Hotel rooms count",
+      "category": "accommodation",
+      "indicator_type": "output",
+      "measurement_unit": "rooms",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(available_rooms)",
+        "numerator": "available_rooms",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "requires_field_verification",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الطاقة الإيوائية",
+        "display_order": 13
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "UN_TOURISM"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "rooms",
+        "capacity"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-ACC-005",
+      "code": "beds_count",
+      "name_ar": "عدد الأسرة السياحية",
+      "name_en": "Tourism beds count",
+      "category": "accommodation",
+      "indicator_type": "output",
+      "measurement_unit": "beds",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(available_beds)",
+        "numerator": "available_beds",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "requires_field_verification",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الطاقة الإيوائية",
+        "display_order": 14
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "UN_TOURISM"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "beds",
+        "capacity"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-ACC-006",
+      "code": "available_room_nights",
+      "name_ar": "ليالي الغرف المتاحة",
+      "name_en": "Available room nights",
+      "category": "accommodation",
+      "indicator_type": "activity",
+      "measurement_unit": "nights",
+      "direction": "neutral",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "facility",
+      "data_source_ids": [
+        "SRC-ACCOM-003",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "formula",
+        "formula": "SUM(available_rooms * operating_days)",
+        "numerator": "available_rooms * operating_days",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "restricted",
+        "access_level": "operational",
+        "publishable": false,
+        "dashboard_group": "تشغيل الإيواء",
+        "display_order": 15
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-007",
+      "code": "occupied_room_nights",
+      "name_ar": "ليالي الغرف المباعة",
+      "name_en": "Occupied room nights",
+      "category": "accommodation",
+      "indicator_type": "output",
+      "measurement_unit": "nights",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "facility",
+      "data_source_ids": [
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(occupied_room_nights)",
+        "numerator": "occupied_room_nights",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "restricted",
+        "access_level": "operational",
+        "publishable": false,
+        "dashboard_group": "تشغيل الإيواء",
+        "display_order": 16
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-008",
+      "code": "room_occupancy_rate",
+      "name_ar": "نسبة إشغال الغرف",
+      "name_en": "Room occupancy rate",
+      "category": "accommodation",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "facility",
+      "data_source_ids": [
+        "SRC-ACCOM-003",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(occupied_room_nights / available_room_nights) * 100",
+        "numerator": "occupied_room_nights",
+        "denominator": "available_room_nights",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "تشغيل الإيواء",
+        "display_order": 17
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-009",
+      "code": "tourist_nights",
+      "name_ar": "عدد الليالي السياحية",
+      "name_en": "Tourist nights",
+      "category": "accommodation",
+      "indicator_type": "output",
+      "measurement_unit": "nights",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-ACCOM-003"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(tourist_nights)",
+        "numerator": "tourist_nights",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "تشغيل الإيواء",
+        "display_order": 18
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "UN_TOURISM"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "tourist_nights"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-ACC-010",
+      "code": "average_length_of_stay",
+      "name_ar": "متوسط مدة الإقامة",
+      "name_en": "Average length of stay",
+      "category": "accommodation",
+      "indicator_type": "outcome",
+      "measurement_unit": "days",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-ACCOM-003",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "tourist_nights / accommodation_guests",
+        "numerator": "tourist_nights",
+        "denominator": "accommodation_guests",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "تشغيل الإيواء",
+        "display_order": 19
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "UN_TOURISM"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "length_of_stay"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-ACC-011",
+      "code": "average_daily_rate",
+      "name_ar": "متوسط السعر اليومي للغرفة",
+      "name_en": "Average daily rate",
+      "category": "accommodation",
+      "indicator_type": "outcome",
+      "measurement_unit": "LYD",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "facility",
+      "data_source_ids": [
+        "SRC-ACCOM-003",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "room_revenue_lyd / occupied_room_nights",
+        "numerator": "room_revenue_lyd",
+        "denominator": "occupied_room_nights",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "confidential",
+        "access_level": "management",
+        "publishable": false,
+        "dashboard_group": "الأداء المالي للإيواء",
+        "display_order": 20
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ACC-012",
+      "code": "revenue_per_available_room",
+      "name_ar": "الإيراد لكل غرفة متاحة",
+      "name_en": "Revenue per available room",
+      "category": "accommodation",
+      "indicator_type": "outcome",
+      "measurement_unit": "LYD",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "facility",
+      "data_source_ids": [
+        "SRC-ACCOM-003",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "room_revenue_lyd / available_room_nights",
+        "numerator": "room_revenue_lyd",
+        "denominator": "available_room_nights",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "confidential",
+        "access_level": "management",
+        "publishable": false,
+        "dashboard_group": "الأداء المالي للإيواء",
+        "display_order": 21
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-BUS-001",
+      "code": "tourism_companies_count",
+      "name_ar": "عدد الشركات والمكاتب السياحية",
+      "name_en": "Tourism companies and offices count",
+      "category": "companies",
+      "indicator_type": "output",
+      "measurement_unit": "companies",
+      "direction": "higher_is_better",
+      "aggregation_method": "distinct_count",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-LICENSE-004"
+      ],
+      "calculation": {
+        "method": "distinct_count",
+        "formula": "COUNT_DISTINCT(company_id)",
+        "numerator": "company_id",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "high",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الأنشطة السياحية",
+        "display_order": 30
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-BUS-002",
+      "code": "company_renewal_rate",
+      "name_ar": "نسبة تجديد الشركات السياحية",
+      "name_en": "Tourism company renewal rate",
+      "category": "companies",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-LICENSE-004",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(renewed_companies / companies_due_for_renewal) * 100",
+        "numerator": "renewed_companies",
+        "denominator": "companies_due_for_renewal",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الأنشطة السياحية",
+        "display_order": 31
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-BUS-003",
+      "code": "tourism_guides_count",
+      "name_ar": "عدد المرشدين السياحيين",
+      "name_en": "Tourism guides count",
+      "category": "companies",
+      "indicator_type": "output",
+      "measurement_unit": "persons",
+      "direction": "higher_is_better",
+      "aggregation_method": "distinct_count",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-LICENSE-004"
+      ],
+      "calculation": {
+        "method": "distinct_count",
+        "formula": "COUNT_DISTINCT(guide_id)",
+        "numerator": "guide_id",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الأنشطة السياحية",
+        "display_order": 32
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-BUS-004",
+      "code": "handicrafts_count",
+      "name_ar": "عدد الحرفيين والصناعات التقليدية",
+      "name_en": "Handicrafts practitioners count",
+      "category": "handicrafts",
+      "indicator_type": "output",
+      "measurement_unit": "persons",
+      "direction": "higher_is_better",
+      "aggregation_method": "distinct_count",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001"
+      ],
+      "calculation": {
+        "method": "distinct_count",
+        "formula": "COUNT_DISTINCT(artisan_id)",
+        "numerator": "artisan_id",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "high",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الصناعات التقليدية",
+        "display_order": 33
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-BUS-005",
+      "code": "restaurants_cafes_count",
+      "name_ar": "عدد المطاعم والمقاهي السياحية",
+      "name_en": "Tourism restaurants and cafes count",
+      "category": "restaurants_cafes",
+      "indicator_type": "output",
+      "measurement_unit": "facilities",
+      "direction": "higher_is_better",
+      "aggregation_method": "distinct_count",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-MUNICIPAL-010"
+      ],
+      "calculation": {
+        "method": "distinct_count",
+        "formula": "COUNT_DISTINCT(facility_id)",
+        "numerator": "facility_id",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "requires_reclassification",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "الخدمات السياحية",
+        "display_order": 34
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-TRN-001",
+      "code": "flights_count",
+      "name_ar": "عدد الرحلات الجوية",
+      "name_en": "Flights count",
+      "category": "transport",
+      "indicator_type": "output",
+      "measurement_unit": "flights",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-CAA-005"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(domestic_flights + international_flights)",
+        "numerator": "flights",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "النقل الجوي",
+        "display_order": 40
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-TRN-002",
+      "code": "air_passengers",
+      "name_ar": "عدد المسافرين جوًا",
+      "name_en": "Air passengers",
+      "category": "transport",
+      "indicator_type": "output",
+      "measurement_unit": "persons",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-CAA-005"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(air_passengers)",
+        "numerator": "air_passengers",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "النقل الجوي",
+        "display_order": 41
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-TRN-003",
+      "code": "passengers_per_flight",
+      "name_ar": "متوسط المسافرين لكل رحلة",
+      "name_en": "Passengers per flight",
+      "category": "transport",
+      "indicator_type": "outcome",
+      "measurement_unit": "ratio",
+      "direction": "neutral",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-CAA-005",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "air_passengers / flights_count",
+        "numerator": "air_passengers",
+        "denominator": "flights_count",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "النقل الجوي",
+        "display_order": 42
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-HER-001",
+      "code": "heritage_visitors",
+      "name_ar": "عدد زوار المواقع التراثية والمتاحف",
+      "name_en": "Heritage and museum visitors",
+      "category": "heritage",
+      "indicator_type": "output",
+      "measurement_unit": "visitors",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-ANTIQUITIES-007",
+        "SRC-TIDC-001"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(heritage_site_visitors + museum_visitors)",
+        "numerator": "heritage_visitors",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "under_review",
+        "validation_status": "valid_with_warnings",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "التراث والمتاحف",
+        "display_order": 50
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-HER-002",
+      "code": "heritage_visitor_growth_rate",
+      "name_ar": "معدل نمو زوار التراث والمتاحف",
+      "name_en": "Heritage visitor growth rate",
+      "category": "heritage",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "formula",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-ANTIQUITIES-007",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "growth_rate",
+        "formula": "((current_heritage_visitors - previous_heritage_visitors) / previous_heritage_visitors) * 100",
+        "numerator": "current_heritage_visitors - previous_heritage_visitors",
+        "denominator": "previous_heritage_visitors",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": true,
+        "dashboard_group": "التراث والمتاحف",
+        "display_order": 51
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ECO-001",
+      "code": "tourism_revenue_lyd",
+      "name_ar": "الإيرادات السياحية المقدرة",
+      "name_en": "Estimated tourism revenue",
+      "category": "economic",
+      "indicator_type": "outcome",
+      "measurement_unit": "LYD",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-CBL-009",
+        "SRC-SURVEY-012"
+      ],
+      "calculation": {
+        "method": "formula",
+        "formula": "SUM(recorded_tourism_revenue_lyd)",
+        "numerator": "tourism_revenue_lyd",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "restricted",
+        "access_level": "executive",
+        "publishable": false,
+        "dashboard_group": "المؤشرات الاقتصادية",
+        "display_order": 60
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-ECO-002",
+      "code": "tourism_gdp_share",
+      "name_ar": "مساهمة السياحة في الناتج المحلي الإجمالي",
+      "name_en": "Tourism share of GDP",
+      "category": "economic",
+      "indicator_type": "impact",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-STATISTICS-008",
+        "SRC-CBL-009"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(tourism_direct_gva / gross_domestic_product) * 100",
+        "numerator": "tourism_direct_gva",
+        "denominator": "gross_domestic_product",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "restricted",
+        "access_level": "executive",
+        "publishable": false,
+        "dashboard_group": "المؤشرات الاقتصادية",
+        "display_order": 61
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS",
+          "TSA"
+        ],
+        "sdg_targets": []
+      },
+      "tags": [
+        "GDP",
+        "TSA"
+      ]
+    },
+    {
+      "indicator_id": "LTKS-ECO-003",
+      "code": "tourism_employment",
+      "name_ar": "العمالة في الأنشطة السياحية",
+      "name_en": "Tourism employment",
+      "category": "employment",
+      "indicator_type": "impact",
+      "measurement_unit": "jobs",
+      "direction": "higher_is_better",
+      "aggregation_method": "sum",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-STATISTICS-008",
+        "SRC-ACCOM-003",
+        "SRC-SURVEY-012"
+      ],
+      "calculation": {
+        "method": "direct",
+        "formula": "SUM(direct_tourism_jobs)",
+        "numerator": "direct_tourism_jobs",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "restricted",
+        "access_level": "executive",
+        "publishable": false,
+        "dashboard_group": "العمالة السياحية",
+        "display_order": 62
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-DQ-001",
+      "code": "data_completeness_rate",
+      "name_ar": "نسبة اكتمال البيانات",
+      "name_en": "Data completeness rate",
+      "category": "data_quality",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(completed_required_fields / total_required_fields) * 100",
+        "numerator": "completed_required_fields",
+        "denominator": "total_required_fields",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": false,
+        "dashboard_group": "جودة البيانات",
+        "display_order": 70
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-DQ-002",
+      "code": "data_quality_score",
+      "name_ar": "مؤشر جودة البيانات السياحية",
+      "name_en": "Tourism data quality score",
+      "category": "data_quality",
+      "indicator_type": "composite",
+      "measurement_unit": "score",
+      "direction": "higher_is_better",
+      "aggregation_method": "weighted_average",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "formula",
+        "formula": "(completeness*0.25)+(accuracy*0.25)+(consistency*0.20)+(timeliness*0.15)+(uniqueness*0.15)",
+        "numerator": "weighted_quality_components",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": false,
+        "dashboard_group": "جودة البيانات",
+        "display_order": 71
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-DQ-003",
+      "code": "reporting_timeliness_rate",
+      "name_ar": "نسبة الالتزام بمواعيد التوريد",
+      "name_en": "Reporting timeliness rate",
+      "category": "governance",
+      "indicator_type": "outcome",
+      "measurement_unit": "percent",
+      "direction": "higher_is_better",
+      "aggregation_method": "ratio",
+      "time_granularity": "monthly",
+      "update_frequency": "monthly",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "ratio",
+        "formula": "(on_time_submissions / expected_submissions) * 100",
+        "numerator": "on_time_submissions",
+        "denominator": "expected_submissions",
+        "multiplier": 100,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "medium",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "management",
+        "publishable": false,
+        "dashboard_group": "حوكمة البيانات",
+        "display_order": 72
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-PERF-001",
+      "code": "city_tourism_performance_score",
+      "name_ar": "مؤشر الأداء السياحي للمدينة",
+      "name_en": "City tourism performance score",
+      "category": "governance",
+      "indicator_type": "composite",
+      "measurement_unit": "score",
+      "direction": "higher_is_better",
+      "aggregation_method": "weighted_average",
+      "time_granularity": "annual",
+      "update_frequency": "annual",
+      "geography_level": "city",
+      "data_source_ids": [
+        "SRC-TIDC-001",
+        "SRC-ATLAS-011",
+        "SRC-CALCULATED-013"
+      ],
+      "calculation": {
+        "method": "formula",
+        "formula": "(demand_score*0.30)+(capacity_score*0.20)+(services_score*0.15)+(growth_score*0.20)+(data_quality_score*0.15)",
+        "numerator": "weighted_city_components",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "executive",
+        "publishable": false,
+        "dashboard_group": "أداء المدن",
+        "display_order": 80
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-FOR-001",
+      "code": "forecast_international_tourists_2035",
+      "name_ar": "توقع عدد السياح الدوليين عام 2035",
+      "name_en": "Forecast international tourists in 2035",
+      "category": "forecasting",
+      "indicator_type": "forecast",
+      "measurement_unit": "tourists",
+      "direction": "higher_is_better",
+      "aggregation_method": "formula",
+      "time_granularity": "multi_year",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-FORECAST-014"
+      ],
+      "calculation": {
+        "method": "forecast",
+        "formula": "FORECAST(international_tourists, target_year=2035, scenario)",
+        "numerator": "international_tourists_history",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "executive",
+        "publishable": false,
+        "dashboard_group": "التنبؤ 2035",
+        "display_order": 90
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    },
+    {
+      "indicator_id": "LTKS-FOR-002",
+      "code": "forecast_accommodation_guests_2035",
+      "name_ar": "توقع نزلاء الإيواء عام 2035",
+      "name_en": "Forecast accommodation guests in 2035",
+      "category": "forecasting",
+      "indicator_type": "forecast",
+      "measurement_unit": "persons",
+      "direction": "higher_is_better",
+      "aggregation_method": "formula",
+      "time_granularity": "multi_year",
+      "update_frequency": "annual",
+      "geography_level": "national",
+      "data_source_ids": [
+        "SRC-FORECAST-014"
+      ],
+      "calculation": {
+        "method": "forecast",
+        "formula": "FORECAST(accommodation_guests, target_year=2035, scenario)",
+        "numerator": "accommodation_guests_history",
+        "denominator": null,
+        "multiplier": 1,
+        "rounding": 2,
+        "null_policy": "return_null",
+        "division_by_zero_policy": "return_null"
+      },
+      "quality": {
+        "status": "draft",
+        "validation_status": "not_validated",
+        "confidence_level": "low",
+        "requires_manual_review": true
+      },
+      "publication": {
+        "data_classification": "internal",
+        "access_level": "executive",
+        "publishable": false,
+        "dashboard_group": "التنبؤ 2035",
+        "display_order": 91
+      },
+      "alignment": {
+        "frameworks": [
+          "LTKS"
+        ],
+        "sdg_targets": []
+      },
+      "tags": []
+    }
+  ]
+}
