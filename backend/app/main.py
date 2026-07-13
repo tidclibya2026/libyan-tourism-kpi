@@ -31,7 +31,7 @@ from app.core.config import (
     FORECAST_TARGET_YEAR,
     get_settings_summary,
 )
-from app.routers import cities, forecast, kpis, metadata
+from app.routers import accommodation, cities, forecast, kpis, metadata
 from app.services.data_service import (
     DataServiceError,
     get_data_status,
@@ -50,6 +50,13 @@ OPENAPI_TAGS: list[dict[str, str]] = [
     {
         "name": "KPIs",
         "description": "المؤشرات السياحية الوطنية والملخصات الأساسية.",
+    },
+    {
+        "name": "Accommodation",
+        "description": (
+            "الطاقة الإيوائية والنزلاء "
+            "والمؤشرات التشغيلية وجودة البيانات."
+        ),
     },
     {
         "name": "Cities",
@@ -106,6 +113,7 @@ app.add_middleware(
 # =========================================================
 
 app.include_router(kpis.router)
+app.include_router(accommodation.router)
 app.include_router(cities.router)
 app.include_router(forecast.router)
 app.include_router(metadata.router)

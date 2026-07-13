@@ -53,6 +53,10 @@
         rel="stylesheet"
         href="./assets/css/dashboard.css?v=4"
     >
+    <link
+            rel="stylesheet"
+            href="./assets/css/accommodation.css?v=3"
+        >
 
     <!-- ضمان ارتفاع الخريطة حتى عند تعذر بعض قواعد CSS -->
     <style>
@@ -197,7 +201,13 @@
                     نظرة وطنية
                 </a>
 
-                <a
+                                <a
+                    class="top-navigation__link"
+                    href="#accommodation"
+                >
+                    الإيواء والإشغال
+                </a>
+<a
                     class="top-navigation__link"
                     href="#markets"
                 >
@@ -607,6 +617,548 @@
             </section>
 
 
+<section
+                id="accommodation"
+                class="dashboard-section accommodation-section"
+            >
+                <header class="section-header">
+                    <div>
+                        <p class="section-eyebrow">
+                            الطاقة الإيوائية
+                        </p>
+
+                        <h2>
+                            الإيواء والإشغال الفندقي
+                        </h2>
+                    </div>
+
+                    <p class="section-header__note">
+                        البيانات الرسمية والمؤشرات المحسوبة
+                        وفجوات البيانات التشغيلية.
+                    </p>
+                </header>
+
+
+                <div class="accommodation-summary">
+
+                    <article class="accommodation-status-panel">
+                        <div class="accommodation-status-panel__content">
+                            <span class="accommodation-status-panel__label">
+                                حالة محور الإيواء
+                            </span>
+
+                            <h3>
+                                بيانات السنة
+                                <span id="accommodation-year">
+                                    —
+                                </span>
+                            </h3>
+
+                            <p>
+                                لا تُحسب نسب الإشغال أو الإيرادات
+                                دون مدخلات تشغيلية فعلية ومعتمدة.
+                            </p>
+                        </div>
+
+                        <strong
+                            id="accommodation-status"
+                            class="accommodation-status-badge"
+                            data-status="warning"
+                        >
+                            جاري التحميل
+                        </strong>
+                    </article>
+
+
+                    <article class="accommodation-readiness-panel">
+                        <div class="accommodation-readiness-panel__header">
+                            <span>
+                                جاهزية المؤشرات
+                            </span>
+
+                            <strong id="accommodation-readiness-value">
+                                —
+                            </strong>
+                        </div>
+
+                        <div
+                            class="accommodation-progress"
+                            role="progressbar"
+                            aria-label="جاهزية مؤشرات الإيواء"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        >
+                            <div
+                                id="accommodation-readiness-bar"
+                                class="accommodation-progress__bar"
+                                aria-valuenow="0"
+                            ></div>
+                        </div>
+
+                        <div class="accommodation-readiness-meta">
+                            <span>
+                                متاح:
+                                <strong id="accommodation-available-count">
+                                    —
+                                </strong>
+                            </span>
+
+                            <span>
+                                ينتظر البيانات:
+                                <strong id="accommodation-unavailable-count">
+                                    —
+                                </strong>
+                            </span>
+                        </div>
+                    </article>
+
+                </div>
+
+
+                <div class="accommodation-subsection">
+                    <div class="accommodation-subsection__header">
+                        <h3>
+                            الطاقة الإيوائية المسجلة
+                        </h3>
+
+                        <p>
+                            المنشآت والوحدات والغرف والأسرة
+                        </p>
+                    </div>
+
+                    <div class="accommodation-inventory-grid">
+
+                        <article class="accommodation-metric-card">
+                            <span class="accommodation-metric-card__index">
+                                01
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                الفنادق
+                            </p>
+
+                            <strong
+                                id="accommodation-hotels"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                منشأة فندقية
+                            </span>
+                        </article>
+
+
+                        <article class="accommodation-metric-card">
+                            <span class="accommodation-metric-card__index">
+                                02
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                الشقق الفندقية
+                            </p>
+
+                            <strong
+                                id="accommodation-hotel-apartments"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                منشأة
+                            </span>
+                        </article>
+
+
+                        <article class="accommodation-metric-card">
+                            <span class="accommodation-metric-card__index">
+                                03
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                الفنادق والشقق الفندقية
+                            </p>
+
+                            <strong
+                                id="accommodation-facilities"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                إجمالي المنشآت
+                            </span>
+                        </article>
+
+
+                        <article class="accommodation-metric-card">
+                            <span class="accommodation-metric-card__index">
+                                04
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                القرى السياحية
+                            </p>
+
+                            <strong
+                                id="accommodation-villages"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                قرية سياحية
+                            </span>
+                        </article>
+
+
+                        <article class="accommodation-metric-card">
+                            <span class="accommodation-metric-card__index">
+                                05
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                الشاليهات
+                            </p>
+
+                            <strong
+                                id="accommodation-chalets"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                وحدة إيواء
+                            </span>
+                        </article>
+
+
+                        <article class="accommodation-metric-card">
+                            <span class="accommodation-metric-card__index">
+                                06
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                الغرف المسجلة
+                            </p>
+
+                            <strong
+                                id="accommodation-rooms"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                غرفة
+                            </span>
+                        </article>
+
+
+                        <article
+                            class="accommodation-metric-card"
+                            data-quality="review"
+                        >
+                            <span class="accommodation-metric-card__index">
+                                07
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                أسرة الفنادق
+                            </p>
+
+                            <strong
+                                id="accommodation-hotel-beds"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                يحتاج مراجعة تعريفية
+                            </span>
+                        </article>
+
+
+                        <article class="accommodation-metric-card">
+                            <span class="accommodation-metric-card__index">
+                                08
+                            </span>
+
+                            <p class="accommodation-metric-card__label">
+                                أسرة الشاليهات
+                            </p>
+
+                            <strong
+                                id="accommodation-chalet-beds"
+                                class="accommodation-metric-card__value"
+                            >
+                                —
+                            </strong>
+
+                            <span class="accommodation-metric-card__unit">
+                                سرير مسجل
+                            </span>
+                        </article>
+
+                    </div>
+                </div>
+
+
+                <div class="accommodation-subsection">
+                    <div class="accommodation-subsection__header">
+                        <h3>
+                            النزلاء حسب الجنسية
+                        </h3>
+
+                        <p>
+                            أعداد رسمية وحصص محسوبة
+                        </p>
+                    </div>
+
+                    <div class="accommodation-guest-grid">
+
+                        <article class="accommodation-guest-card">
+                            <span>
+                                إجمالي النزلاء
+                            </span>
+
+                            <strong id="accommodation-total-guests">
+                                —
+                            </strong>
+
+                            <small>
+                                100%
+                            </small>
+                        </article>
+
+
+                        <article class="accommodation-guest-card">
+                            <span>
+                                النزلاء الليبيون
+                            </span>
+
+                            <strong id="accommodation-libyan-guests">
+                                —
+                            </strong>
+
+                            <small id="accommodation-libyan-share">
+                                —
+                            </small>
+                        </article>
+
+
+                        <article class="accommodation-guest-card">
+                            <span>
+                                النزلاء العرب
+                            </span>
+
+                            <strong id="accommodation-arab-guests">
+                                —
+                            </strong>
+
+                            <small id="accommodation-arab-share">
+                                —
+                            </small>
+                        </article>
+
+
+                        <article class="accommodation-guest-card">
+                            <span>
+                                النزلاء الأجانب
+                            </span>
+
+                            <strong id="accommodation-foreign-guests">
+                                —
+                            </strong>
+
+                            <small id="accommodation-foreign-share">
+                                —
+                            </small>
+                        </article>
+
+                    </div>
+                </div>
+
+
+                <div class="accommodation-subsection">
+                    <div class="accommodation-subsection__header">
+                        <h3>
+                            التحليل والتحقق الإحصائي
+                        </h3>
+
+                        <p>
+                            مخطط النزلاء ومطابقة الإجمالي الرسمي
+                        </p>
+                    </div>
+
+                    <div class="accommodation-analysis-grid">
+
+                        <article class="accommodation-chart-card">
+                            <header class="accommodation-card-header">
+                                <div>
+                                    <span class="accommodation-card-eyebrow">
+                                        التركيب السوقي
+                                    </span>
+
+                                    <h4>
+                                        توزيع نزلاء الإيواء
+                                        حسب الجنسية
+                                    </h4>
+                                </div>
+
+                                <span class="accommodation-data-classification">
+                                    بيانات رسمية
+                                </span>
+                            </header>
+
+                            <div class="accommodation-chart-container">
+                                <canvas
+                                    id="accommodation-guest-chart"
+                                    aria-label="مخطط توزيع النزلاء حسب الجنسية"
+                                    role="img"
+                                ></canvas>
+                            </div>
+
+                            <p
+                                id="accommodation-chart-status"
+                                class="accommodation-chart-status"
+                            >
+                                جاري تحميل بيانات المخطط…
+                            </p>
+                        </article>
+
+
+                        <article class="accommodation-verification-card">
+                            <header class="accommodation-card-header">
+                                <div>
+                                    <span class="accommodation-card-eyebrow">
+                                        ضبط الجودة
+                                    </span>
+
+                                    <h4>
+                                        مطابقة بيانات النزلاء
+                                    </h4>
+                                </div>
+
+                                <strong
+                                    id="accommodation-verification-status"
+                                    class="accommodation-verification-badge"
+                                >
+                                    قيد الفحص
+                                </strong>
+                            </header>
+
+                            <div class="accommodation-verification-list">
+
+                                <div class="accommodation-verification-row">
+                                    <span>
+                                        الإجمالي الرسمي
+                                    </span>
+
+                                    <strong id="accommodation-official-total">
+                                        —
+                                    </strong>
+                                </div>
+
+                                <div class="accommodation-verification-row">
+                                    <span>
+                                        مجموع الجنسيات
+                                    </span>
+
+                                    <strong id="accommodation-calculated-total">
+                                        —
+                                    </strong>
+                                </div>
+
+                                <div class="accommodation-verification-row">
+                                    <span>
+                                        قيمة الفرق
+                                    </span>
+
+                                    <strong id="accommodation-total-difference">
+                                        —
+                                    </strong>
+                                </div>
+
+                                <div class="accommodation-verification-row">
+                                    <span>
+                                        مصدر البيانات
+                                    </span>
+
+                                    <strong id="accommodation-data-source">
+                                        —
+                                    </strong>
+                                </div>
+
+                            </div>
+
+                            <p
+                                id="accommodation-verification-note"
+                                class="accommodation-verification-note"
+                            >
+                                تتم مطابقة الإجمالي الرسمي
+                                مع مجموع الجنسيات.
+                            </p>
+                        </article>
+
+                    </div>
+                </div>
+
+
+                <div class="accommodation-subsection">
+                    <div class="accommodation-subsection__header">
+                        <h3>
+                            المؤشرات الهيكلية والتشغيلية
+                        </h3>
+
+                        <p>
+                            القيم المتاحة والمدخلات المطلوبة
+                        </p>
+                    </div>
+
+                    <div
+                        id="accommodation-operational-grid"
+                        class="accommodation-operational-grid"
+                    >
+                        <div class="accommodation-inline-error">
+                            جاري تحميل مؤشرات الإيواء…
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accommodation-subsection">
+                    <div class="accommodation-subsection__header">
+                        <h3>
+                            ملاحظات جودة البيانات
+                        </h3>
+
+                        <p>
+                            لا تستخدم التقديرات كإشغال رسمي
+                        </p>
+                    </div>
+
+                    <ul
+                        id="accommodation-quality-list"
+                        class="accommodation-quality-list"
+                    >
+                        <li
+                            class="accommodation-quality-item"
+                            data-severity="info"
+                        >
+                            جاري تحميل ملاحظات الجودة…
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
             <!-- Charts -->
             <section
                 id="markets"
@@ -933,6 +1485,7 @@
     <!-- Local application scripts -->
     <script src="./assets/js/config.js?v=4"></script>
     <script src="./assets/js/api.js?v=4"></script>
+    <script src="./assets/js/accommodation.js?v=3"></script>
     <script src="./assets/js/charts.js?v=4"></script>
     <script src="./assets/js/map.js?v=4"></script>
     <script src="./assets/js/dashboard.js?v=4"></script>

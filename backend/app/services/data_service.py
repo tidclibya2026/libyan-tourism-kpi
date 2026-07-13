@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from app.core.config import (
+    ACCOMMODATION_FILE,
     CITIES_FILE,
     CONTINENTS_FILE,
     DATA_SOURCES_FILE,
@@ -127,6 +128,11 @@ def load_cities() -> JsonObject:
 
 def load_continents() -> JsonObject:
     return load_json(CONTINENTS_FILE)
+
+
+def load_accommodation() -> JsonObject:
+    """تحميل بيانات الإيواء للسنة المرجعية."""
+    return load_json(ACCOMMODATION_FILE)
 
 
 def load_data_sources() -> JsonObject:
@@ -793,6 +799,7 @@ def get_data_status() -> JsonObject:
         "national_kpis": NATIONAL_KPIS_FILE,
         "cities": CITIES_FILE,
         "continents": CONTINENTS_FILE,
+        "accommodation": ACCOMMODATION_FILE,
         "data_sources": DATA_SOURCES_FILE,
         "indicator_registry": INDICATOR_REGISTRY_FILE,
         "legacy_data": LEGACY_DATA_FILE,
@@ -811,6 +818,7 @@ def get_data_status() -> JsonObject:
         "national_kpis",
         "cities",
         "continents",
+        "accommodation",
         "data_sources",
         "indicator_registry",
     }

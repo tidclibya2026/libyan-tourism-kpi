@@ -1,0 +1,133 @@
+﻿{
+    "schema_version":  "1.0.0",
+    "year":  2025,
+    "country":  "Libya",
+    "country_ar":  "ليبيا",
+    "module":  "accommodation",
+    "module_name_ar":  "الإيواء والإشغال الفندقي",
+    "reporting_period":  {
+                             "type":  "annual",
+                             "start_date":  "2025-01-01",
+                             "end_date":  "2025-12-31",
+                             "expected_months":  12
+                         },
+    "source":  {
+                   "organization_ar":  "مركز المعلومات والتوثيق السياحي",
+                   "document_ar":  "التقرير الإحصائي للقطاع السياحي 2025",
+                   "data_status":  "official_with_quality_review",
+                   "confidence_level":  "high"
+               },
+    "inventory":  {
+                      "hotels":  384,
+                      "hotel_apartments":  258,
+                      "hotels_and_apartments":  642,
+                      "tourist_villages":  134,
+                      "chalets":  1980,
+                      "reported_rooms":  21821,
+                      "reported_hotel_beds":  75606,
+                      "reported_chalet_beds":  15840
+                  },
+    "guests_reference":  {
+                             "total_guests":  373843,
+                             "libyan_guests":  263357,
+                             "arab_guests":  92575,
+                             "foreign_guests":  17911,
+                             "source_file":  "cities_2025.json",
+                             "reconciliation_status":  "matched"
+                         },
+    "operational_inputs":  {
+                               "tourist_nights":  null,
+                               "occupied_room_nights":  null,
+                               "available_room_nights":  null,
+                               "occupied_bed_nights":  null,
+                               "available_bed_nights":  null,
+                               "room_revenue_lyd":  null,
+                               "rooms_out_of_service":  null,
+                               "beds_out_of_service":  null
+                           },
+    "calculation_availability":  {
+                                     "average_guests_per_facility":  {
+                                                                         "status":  "available",
+                                                                         "required_inputs":  [
+                                                                                                 "total_guests",
+                                                                                                 "hotels_and_apartments"
+                                                                                             ]
+                                                                     },
+                                     "average_rooms_per_facility":  {
+                                                                        "status":  "available",
+                                                                        "required_inputs":  [
+                                                                                                "reported_rooms",
+                                                                                                "hotels_and_apartments"
+                                                                                            ]
+                                                                    },
+                                     "average_beds_per_facility":  {
+                                                                       "status":  "available_with_review",
+                                                                       "required_inputs":  [
+                                                                                               "reported_hotel_beds",
+                                                                                               "hotels_and_apartments"
+                                                                                           ]
+                                                                   },
+                                     "average_beds_per_room":  {
+                                                                   "status":  "available_with_review",
+                                                                   "required_inputs":  [
+                                                                                           "reported_hotel_beds",
+                                                                                           "reported_rooms"
+                                                                                       ]
+                                                               },
+                                     "average_length_of_stay":  {
+                                                                    "status":  "unavailable",
+                                                                    "required_inputs":  [
+                                                                                            "tourist_nights",
+                                                                                            "total_guests"
+                                                                                        ]
+                                                                },
+                                     "room_occupancy_rate":  {
+                                                                 "status":  "unavailable",
+                                                                 "required_inputs":  [
+                                                                                         "occupied_room_nights",
+                                                                                         "available_room_nights"
+                                                                                     ]
+                                                             },
+                                     "bed_occupancy_rate":  {
+                                                                "status":  "unavailable",
+                                                                "required_inputs":  [
+                                                                                        "occupied_bed_nights",
+                                                                                        "available_bed_nights"
+                                                                                    ]
+                                                            },
+                                     "average_daily_rate":  {
+                                                                "status":  "unavailable",
+                                                                "required_inputs":  [
+                                                                                        "room_revenue_lyd",
+                                                                                        "occupied_room_nights"
+                                                                                    ]
+                                                            },
+                                     "revenue_per_available_room":  {
+                                                                        "status":  "unavailable",
+                                                                        "required_inputs":  [
+                                                                                                "room_revenue_lyd",
+                                                                                                "available_room_nights"
+                                                                                            ]
+                                                                    }
+                                 },
+    "monthly_records":  [
+
+                        ],
+    "quality_flags":  [
+                          {
+                              "code":  "MONTHLY_OPERATIONS_NOT_AVAILABLE",
+                              "severity":  "warning",
+                              "message_ar":  "لا تتوفر حتى الآن بيانات تشغيل شهرية كاملة لليالي والغرف والأسرة المباعة."
+                          },
+                          {
+                              "code":  "BED_DEFINITION_REVIEW_REQUIRED",
+                              "severity":  "warning",
+                              "message_ar":  "يجب مراجعة تعريف رقم الأسرة والتأكد من نطاق المنشآت المشمولة."
+                          },
+                          {
+                              "code":  "OCCUPANCY_NOT_ESTIMATED",
+                              "severity":  "information",
+                              "message_ar":  "لا يتم احتساب الإشغال باستخدام عدد النزلاء أو مدة إقامة مفترضة."
+                          }
+                      ]
+}
