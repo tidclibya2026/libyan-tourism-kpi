@@ -108,6 +108,10 @@ ACCOMMODATION_FILE: Final[Path] = (
     CORE_DATA_DIR / "accommodation_2025.json"
 )
 
+ACCOMMODATION_MONTHLY_FILE: Final[Path] = (
+    CORE_DATA_DIR / "accommodation_monthly_2025.json"
+)
+
 DATA_SOURCES_FILE: Final[Path] = (
     METADATA_DIR / "data_sources.json"
 )
