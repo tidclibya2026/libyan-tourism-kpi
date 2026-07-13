@@ -20,6 +20,7 @@ from typing import Any
 
 from app.core.config import (
     ACCOMMODATION_FILE,
+    ACCOMMODATION_MONTHLY_FILE,
     CITIES_FILE,
     CONTINENTS_FILE,
     DATA_SOURCES_FILE,
@@ -133,6 +134,11 @@ def load_continents() -> JsonObject:
 def load_accommodation() -> JsonObject:
     """تحميل بيانات الإيواء للسنة المرجعية."""
     return load_json(ACCOMMODATION_FILE)
+
+
+def load_accommodation_monthly() -> JsonObject:
+    """تحميل بيانات الإيواء التشغيلية الشهرية."""
+    return load_json(ACCOMMODATION_MONTHLY_FILE)
 
 
 def load_data_sources() -> JsonObject:
@@ -800,6 +806,7 @@ def get_data_status() -> JsonObject:
         "cities": CITIES_FILE,
         "continents": CONTINENTS_FILE,
         "accommodation": ACCOMMODATION_FILE,
+        "accommodation_monthly": ACCOMMODATION_MONTHLY_FILE,
         "data_sources": DATA_SOURCES_FILE,
         "indicator_registry": INDICATOR_REGISTRY_FILE,
         "legacy_data": LEGACY_DATA_FILE,
@@ -819,6 +826,7 @@ def get_data_status() -> JsonObject:
         "cities",
         "continents",
         "accommodation",
+        "accommodation_monthly",
         "data_sources",
         "indicator_registry",
     }
