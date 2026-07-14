@@ -1,0 +1,350 @@
+/**
+ * Monthly Accommodation Operations
+ */
+
+.accommodation-monthly-panel {
+    --monthly-primary: #0b3a67;
+    --monthly-gold: #b9933f;
+    --monthly-success: #16734b;
+    --monthly-warning: #a86412;
+    --monthly-danger: #a62929;
+    --monthly-muted: #64748b;
+    --monthly-border: #d8e2ec;
+    --monthly-surface: #ffffff;
+
+    padding: 20px;
+    border: 1px solid var(--monthly-border);
+    border-radius: 17px;
+    background: #f8fbfd;
+}
+
+.accommodation-monthly-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.accommodation-monthly-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    align-items: center;
+}
+
+.accommodation-monthly-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #fff3df;
+    color: var(--monthly-warning);
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.accommodation-monthly-status[data-status="available"] {
+    background: #e8f6ef;
+    color: var(--monthly-success);
+}
+
+.accommodation-monthly-status[data-status="error"] {
+    background: #fdecec;
+    color: var(--monthly-danger);
+}
+
+.accommodation-monthly-reference {
+    color: var(--monthly-muted);
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.accommodation-monthly-button {
+    padding: 9px 14px;
+    border: 1px solid var(--monthly-primary);
+    border-radius: 10px;
+    background: var(--monthly-primary);
+    color: #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+.accommodation-monthly-button:hover {
+    filter: brightness(1.06);
+}
+
+.accommodation-monthly-button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.accommodation-monthly-button--secondary {
+    background: #ffffff;
+    color: var(--monthly-primary);
+}
+
+.accommodation-monthly-filters {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(150px, 1fr))
+        auto
+        auto;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 14px;
+    border: 1px solid var(--monthly-border);
+    border-radius: 13px;
+    background: var(--monthly-surface);
+}
+
+.accommodation-monthly-filter {
+    display: grid;
+    gap: 6px;
+}
+
+.accommodation-monthly-filter label {
+    color: var(--monthly-muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.accommodation-monthly-filter select {
+    width: 100%;
+    min-height: 39px;
+    padding: 7px 10px;
+    border: 1px solid var(--monthly-border);
+    border-radius: 9px;
+    background: #ffffff;
+    color: var(--monthly-primary);
+    font-family: inherit;
+}
+
+.accommodation-monthly-filter-actions {
+    display: flex;
+    align-items: end;
+}
+
+.accommodation-monthly-message {
+    margin-bottom: 15px;
+    padding: 12px 14px;
+    border-radius: 11px;
+    background: #fff5e6;
+    color: var(--monthly-warning);
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.8;
+}
+
+.accommodation-monthly-message[data-status="available"] {
+    background: #e8f6ef;
+    color: var(--monthly-success);
+}
+
+.accommodation-monthly-message[data-status="error"] {
+    background: #fdecec;
+    color: var(--monthly-danger);
+}
+
+.accommodation-monthly-metrics {
+    display: grid;
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+    gap: 11px;
+}
+
+.accommodation-monthly-card {
+    min-height: 112px;
+    padding: 15px;
+    border: 1px solid var(--monthly-border);
+    border-radius: 13px;
+    background: var(--monthly-surface);
+    box-shadow:
+        0 6px 17px
+        rgba(11, 35, 65, 0.045);
+}
+
+.accommodation-monthly-card span {
+    display: block;
+    color: var(--monthly-muted);
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.accommodation-monthly-card strong {
+    display: block;
+    margin-top: 10px;
+    color: var(--monthly-primary);
+    font-size: 1.18rem;
+    font-weight: 900;
+    line-height: 1.4;
+}
+
+.accommodation-monthly-card small {
+    display: block;
+    margin-top: 6px;
+    color: var(--monthly-gold);
+    font-size: 0.64rem;
+    font-weight: 700;
+}
+
+.accommodation-monthly-analysis {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(280px, 0.55fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.accommodation-monthly-chart-card,
+.accommodation-monthly-readiness-card {
+    padding: 17px;
+    border: 1px solid var(--monthly-border);
+    border-radius: 14px;
+    background: var(--monthly-surface);
+}
+
+.accommodation-monthly-chart-card h4,
+.accommodation-monthly-readiness-card h4 {
+    margin: 0 0 13px;
+    color: var(--monthly-primary);
+    font-size: 0.9rem;
+}
+
+.accommodation-monthly-chart-container {
+    position: relative;
+    width: 100%;
+    height: 290px;
+    min-height: 290px;
+}
+
+.accommodation-monthly-chart-container canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.accommodation-monthly-chart-status {
+    margin: 10px 0 0;
+    color: var(--monthly-muted);
+    font-size: 0.7rem;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.accommodation-monthly-readiness-value {
+    display: block;
+    margin-bottom: 13px;
+    color: var(--monthly-primary);
+    font-size: 1.7rem;
+    font-weight: 900;
+}
+
+.accommodation-monthly-progress {
+    height: 12px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e5edf4;
+}
+
+.accommodation-monthly-progress__bar {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background:
+        linear-gradient(
+            90deg,
+            var(--monthly-primary),
+            var(--monthly-gold)
+        );
+    transition: width 500ms ease;
+}
+
+.accommodation-monthly-readiness-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.accommodation-monthly-readiness-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 9px;
+    background: #f6f9fb;
+    color: var(--monthly-muted);
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.accommodation-monthly-readiness-row strong {
+    color: var(--monthly-primary);
+}
+
+@media (max-width: 1200px) {
+    .accommodation-monthly-filters {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .accommodation-monthly-metrics {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .accommodation-monthly-analysis {
+        grid-template-columns: 1fr;
+    }
+
+    .accommodation-monthly-metrics {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .accommodation-monthly-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .accommodation-monthly-filters,
+    .accommodation-monthly-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .accommodation-monthly-filter-actions {
+        align-items: stretch;
+    }
+
+    .accommodation-monthly-button {
+        width: 100%;
+    }
+
+    .accommodation-monthly-chart-container {
+        height: 245px;
+        min-height: 245px;
+    }
+}
+
+@media print {
+    .accommodation-monthly-filters,
+    .accommodation-monthly-toolbar button {
+        display: none;
+    }
+
+    .accommodation-monthly-card,
+    .accommodation-monthly-chart-card,
+    .accommodation-monthly-readiness-card {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+}
