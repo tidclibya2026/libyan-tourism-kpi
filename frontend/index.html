@@ -58,6 +58,11 @@
             href="./assets/css/accommodation.css?v=3"
         >
 
+    <link
+        rel="stylesheet"
+        href="./assets/css/accommodation_monthly.css?v=1"
+    >
+
     <!-- ضمان ارتفاع الخريطة حتى عند تعذر بعض قواعد CSS -->
     <style>
         #tourism-map {
@@ -1157,7 +1162,289 @@
                     </ul>
                 </div>
 
-            </section>
+            
+                <div
+                    id="accommodation-monthly"
+                    class="accommodation-subsection accommodation-monthly-panel"
+                >
+                    <div class="accommodation-subsection__header">
+                        <div>
+                            <h3>
+                                التشغيل الشهري لمنشآت الإيواء
+                            </h3>
+
+                            <p>
+                                الإشغال والليالي ومتوسط الإقامة
+                                وADR وRevPAR
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="accommodation-monthly-toolbar">
+                        <div class="accommodation-monthly-meta">
+                            <strong
+                                id="accommodation-monthly-status"
+                                class="accommodation-monthly-status"
+                                data-status="no_data"
+                            >
+                                جاري التحميل
+                            </strong>
+
+                            <span class="accommodation-monthly-reference">
+                                السنة:
+                                <strong id="accommodation-monthly-year">
+                                    —
+                                </strong>
+                            </span>
+
+                            <span class="accommodation-monthly-reference">
+                                السجلات:
+                                <strong id="accommodation-monthly-records-count">
+                                    —
+                                </strong>
+                            </span>
+                        </div>
+
+                        <button
+                            id="accommodation-monthly-refresh"
+                            class="accommodation-monthly-button"
+                            type="button"
+                        >
+                            تحديث البيانات
+                        </button>
+                    </div>
+
+                    <form
+                        id="accommodation-monthly-filters"
+                        class="accommodation-monthly-filters"
+                    >
+                        <div class="accommodation-monthly-filter">
+                            <label for="accommodation-monthly-filter-month">
+                                الشهر
+                            </label>
+
+                            <select id="accommodation-monthly-filter-month">
+                                <option value="">
+                                    جميع الأشهر
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="accommodation-monthly-filter">
+                            <label for="accommodation-monthly-filter-branch">
+                                الفرع
+                            </label>
+
+                            <select id="accommodation-monthly-filter-branch">
+                                <option value="">
+                                    جميع الفروع
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="accommodation-monthly-filter">
+                            <label for="accommodation-monthly-filter-municipality">
+                                البلدية
+                            </label>
+
+                            <select id="accommodation-monthly-filter-municipality">
+                                <option value="">
+                                    جميع البلديات
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="accommodation-monthly-filter">
+                            <label for="accommodation-monthly-filter-verification">
+                                حالة التحقق
+                            </label>
+
+                            <select id="accommodation-monthly-filter-verification">
+                                <option value="">
+                                    جميع حالات التحقق
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="accommodation-monthly-filter-actions">
+                            <button
+                                class="accommodation-monthly-button"
+                                type="submit"
+                            >
+                                تطبيق المرشحات
+                            </button>
+                        </div>
+
+                        <div class="accommodation-monthly-filter-actions">
+                            <button
+                                id="accommodation-monthly-reset"
+                                class="accommodation-monthly-button accommodation-monthly-button--secondary"
+                                type="button"
+                            >
+                                إعادة الضبط
+                            </button>
+                        </div>
+                    </form>
+
+                    <div
+                        id="accommodation-monthly-message"
+                        class="accommodation-monthly-message"
+                        data-status="no_data"
+                    >
+                        جاري فحص البيانات التشغيلية الشهرية…
+                    </div>
+
+                    <div class="accommodation-monthly-metrics">
+                        <article class="accommodation-monthly-card">
+                            <span>المنشآت المبلغة</span>
+                            <strong id="accommodation-monthly-reporting-facilities">
+                                —
+                            </strong>
+                            <small>منشأة ذات سجل تشغيلي</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>الأشهر المغطاة</span>
+                            <strong id="accommodation-monthly-months-covered">
+                                —
+                            </strong>
+                            <small>ضمن نطاق التصفية</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>إجمالي النزلاء</span>
+                            <strong id="accommodation-monthly-total-guests">
+                                —
+                            </strong>
+                            <small>ليبيون وعرب وأجانب</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>الليالي السياحية</span>
+                            <strong id="accommodation-monthly-tourist-nights">
+                                —
+                            </strong>
+                            <small>إجمالي ليالي الإقامة</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>إشغال الغرف</span>
+                            <strong id="accommodation-monthly-room-occupancy">
+                                —
+                            </strong>
+                            <small>ليالي الغرف المباعة ÷ المتاحة</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>إشغال الأسرة</span>
+                            <strong id="accommodation-monthly-bed-occupancy">
+                                —
+                            </strong>
+                            <small>ليالي الأسرة المشغولة ÷ المتاحة</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>متوسط مدة الإقامة</span>
+                            <strong id="accommodation-monthly-average-stay">
+                                —
+                            </strong>
+                            <small>الليالي السياحية ÷ النزلاء</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>متوسط سعر الغرفة ADR</span>
+                            <strong id="accommodation-monthly-adr">
+                                —
+                            </strong>
+                            <small>الإيراد ÷ ليالي الغرف المباعة</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>العائد على الغرفة RevPAR</span>
+                            <strong id="accommodation-monthly-revpar">
+                                —
+                            </strong>
+                            <small>الإيراد ÷ ليالي الغرف المتاحة</small>
+                        </article>
+
+                        <article class="accommodation-monthly-card">
+                            <span>إيرادات الغرف</span>
+                            <strong id="accommodation-monthly-room-revenue">
+                                —
+                            </strong>
+                            <small>القيمة المبلغة بالدينار الليبي</small>
+                        </article>
+                    </div>
+
+                    <div class="accommodation-monthly-analysis">
+                        <article class="accommodation-monthly-chart-card">
+                            <h4>
+                                اتجاه إشغال الغرف والأسرة
+                            </h4>
+
+                            <div class="accommodation-monthly-chart-container">
+                                <canvas
+                                    id="accommodation-monthly-trend-chart"
+                                    aria-label="اتجاه الإشغال الشهري"
+                                    role="img"
+                                ></canvas>
+                            </div>
+
+                            <p
+                                id="accommodation-monthly-chart-status"
+                                class="accommodation-monthly-chart-status"
+                            >
+                                جاري تحميل الاتجاه الشهري…
+                            </p>
+                        </article>
+
+                        <article class="accommodation-monthly-readiness-card">
+                            <h4>
+                                جاهزية المؤشرات التشغيلية
+                            </h4>
+
+                            <strong
+                                id="accommodation-monthly-readiness-value"
+                                class="accommodation-monthly-readiness-value"
+                            >
+                                —
+                            </strong>
+
+                            <div
+                                class="accommodation-monthly-progress"
+                                role="progressbar"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                <div
+                                    id="accommodation-monthly-readiness-bar"
+                                    class="accommodation-monthly-progress__bar"
+                                    aria-valuenow="0"
+                                ></div>
+                            </div>
+
+                            <div class="accommodation-monthly-readiness-list">
+                                <div class="accommodation-monthly-readiness-row">
+                                    <span>المؤشرات المتاحة</span>
+
+                                    <strong id="accommodation-monthly-available-count">
+                                        —
+                                    </strong>
+                                </div>
+
+                                <div class="accommodation-monthly-readiness-row">
+                                    <span>المؤشرات غير المتاحة</span>
+
+                                    <strong id="accommodation-monthly-unavailable-count">
+                                        —
+                                    </strong>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+</section>
 
             <!-- Charts -->
             <section
@@ -1486,6 +1773,7 @@
     <script src="./assets/js/config.js?v=4"></script>
     <script src="./assets/js/api.js?v=4"></script>
     <script src="./assets/js/accommodation.js?v=3"></script>
+    <script src="./assets/js/accommodation_monthly.js?v=1"></script>
     <script src="./assets/js/charts.js?v=4"></script>
     <script src="./assets/js/map.js?v=4"></script>
     <script src="./assets/js/dashboard.js?v=4"></script>
