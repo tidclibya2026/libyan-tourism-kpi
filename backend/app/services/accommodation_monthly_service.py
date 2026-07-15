@@ -1026,7 +1026,7 @@ def calculate_monthly_accommodation_metrics(
     month: int | None = None,
     branch: str | None = None,
     municipality: str | None = None,
-    verification_status: str | None = None,
+    verification_status: str | None = "verified",
     include_records: bool = False,
 ) -> JsonObject:
     payload = load_accommodation_monthly()
@@ -1287,6 +1287,7 @@ def get_facility_monthly_history(
     facility_records = _filter_records(
         records,
         facility_id=normalized_id,
+        verification_status="verified",
     )
 
     if not facility_records:

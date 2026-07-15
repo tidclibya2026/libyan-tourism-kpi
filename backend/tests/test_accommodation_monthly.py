@@ -449,3 +449,147 @@ def test_monthly_routes_in_openapi(
     assert expected_paths.issubset(
         set(paths)
     )
+
+def _mixed_verification_payload() -> dict:
+    """
+    بيانات مختلطة لاختبار سياسة التحقق الافتراضية.
+    """
+    payload = _sample_payload()
+
+    pending_record = dict(
+        payload["records"][0]
+    )
+
+    pending_record.update(
+        {
+            "month": 2,
+            "sold_room_nights": 140,
+            "occupied_bed_nights": 280,
+            "libyan_guests": 40,
+            "arab_guests": 8,
+            "foreign_guests": 2,
+            "tourist_nights": 100,
+            "room_revenue_lyd": 28000,
+            "source_reference": "PENDING-REVIEW-002",
+            "verification_status": "pending_review",
+        }
+    )
+
+    payload["records"].append(
+        pending_record
+    )
+
+    return payload
+
+
+def test_default_policy_uses_verified_records_only(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """
+    الحساب الافتراضي يجب أن يعتمد السجلات المتحققة فقط.
+    """
+    payload = _mixed_verification_payload()
+
+    monkeypatch.setattr(
+        accommodation_monthly_service,
+        "load_accommodation_monthly",
+        lambda: payload,
+    )
+
+    result = (
+        calculate_monthly_accommodation_metrics()
+    )
+
+    assert result["status"] == "available"
+
+    assert result["source_records_count"] == 2
+    assert result["records_count"] == 1
+
+    assert (
+        result["filters_applied"][
+            "verification_status"
+        ]
+        == "verified"
+    )
+
+    assert (
+        result["totals"][
+            "reporting_facilities"
+        ]
+        == 1
+    )
+
+    assert (
+        result["totals"][
+            "months_covered"
+        ]
+        == 1
+    )
+
+    assert (
+        result["totals"][
+            "total_guests"
+        ]
+        == 100
+    )
+
+    assert (
+        result["totals"][
+            "tourist_nights"
+        ]
+        == 200
+    )
+
+
+def test_explicit_status_filter_and_history_policy(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """
+    يمكن فحص الحالات الأخرى صراحة،
+    بينما سجل المنشأة العام يعرض verified فقط.
+    """
+    payload = _mixed_verification_payload()
+
+    monkeypatch.setattr(
+        accommodation_monthly_service,
+        "load_accommodation_monthly",
+        lambda: payload,
+    )
+
+    pending_result = (
+        calculate_monthly_accommodation_metrics(
+            verification_status="pending_review"
+        )
+    )
+
+    assert pending_result["status"] == "available"
+    assert pending_result["records_count"] == 1
+
+    assert (
+        pending_result["totals"][
+            "total_guests"
+        ]
+        == 50
+    )
+
+    assert (
+        pending_result["filters_applied"][
+            "verification_status"
+        ]
+        == "pending_review"
+    )
+
+    history = (
+        accommodation_monthly_service
+        .get_facility_monthly_history(
+            "FAC-001"
+        )
+    )
+
+    assert history["records_count"] == 1
+
+    assert all(
+        item["verification_status"]
+        == "verified"
+        for item in history["items"]
+    )
