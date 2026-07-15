@@ -593,3 +593,99 @@ def test_explicit_status_filter_and_history_policy(
         == "verified"
         for item in history["items"]
     )
+
+def test_api_defaults_to_verified_records(
+    client: TestClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """
+    مسار API الافتراضي لا يعرض pending_review.
+    """
+    payload = _mixed_verification_payload()
+
+    monkeypatch.setattr(
+        accommodation_monthly_service,
+        "load_accommodation_monthly",
+        lambda: payload,
+    )
+
+    response = client.get(
+        "/api/accommodation/monthly"
+    )
+
+    assert response.status_code == 200
+
+    result = response.json()
+
+    assert result["source_records_count"] == 2
+    assert result["records_count"] == 1
+
+    assert (
+        result["filters_applied"][
+            "verification_status"
+        ]
+        == "verified"
+    )
+
+    assert (
+        result["totals"]["total_guests"]
+        == 100
+    )
+
+    pending_response = client.get(
+        "/api/accommodation/monthly",
+        params={
+            "verification_status": (
+                "pending_review"
+            )
+        },
+    )
+
+    assert pending_response.status_code == 200
+
+    pending_result = pending_response.json()
+
+    assert pending_result["records_count"] == 1
+
+    assert (
+        pending_result["filters_applied"][
+            "verification_status"
+        ]
+        == "pending_review"
+    )
+
+    assert (
+        pending_result["totals"][
+            "total_guests"
+        ]
+        == 50
+    )
+
+def test_facility_history_uses_verified_records_only(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """
+    سجل المنشأة العام يعرض verified فقط.
+    """
+    payload = _mixed_verification_payload()
+
+    monkeypatch.setattr(
+        accommodation_monthly_service,
+        "load_accommodation_monthly",
+        lambda: payload,
+    )
+
+    history = (
+        accommodation_monthly_service
+        .get_facility_monthly_history(
+            "FAC-001"
+        )
+    )
+
+    assert history["records_count"] == 1
+
+    assert all(
+        item["verification_status"]
+        == "verified"
+        for item in history["items"]
+    )
