@@ -125,8 +125,11 @@ def get_monthly_accommodation(
         description="البلدية.",
     ),
     verification_status: str | None = Query(
-        default=None,
-        description="حالة التحقق من السجل.",
+        default="verified",
+        description=(
+            "حالة التحقق من السجل. "
+            "القيمة الافتراضية verified."
+        ),
     ),
     include_records: bool = Query(
         default=False,
@@ -173,7 +176,13 @@ def get_monthly_accommodation_summary_endpoint(
     ),
     branch: str | None = None,
     municipality: str | None = None,
-    verification_status: str | None = None,
+    verification_status: str | None = Query(
+        default="verified",
+        description=(
+            "حالة التحقق من السجل. "
+            "القيمة الافتراضية verified."
+        ),
+    ),
 ) -> dict:
     """
     إرجاع الملخص التشغيلي الشهري.
@@ -211,7 +220,13 @@ def get_monthly_accommodation_records_endpoint(
     ),
     branch: str | None = None,
     municipality: str | None = None,
-    verification_status: str | None = None,
+    verification_status: str | None = Query(
+        default="verified",
+        description=(
+            "حالة التحقق من السجل. "
+            "القيمة الافتراضية verified."
+        ),
+    ),
 ) -> dict:
     """
     إرجاع السجلات التشغيلية الشهرية.
@@ -249,7 +264,13 @@ def get_monthly_accommodation_trends_endpoint(
     ),
     branch: str | None = None,
     municipality: str | None = None,
-    verification_status: str | None = None,
+    verification_status: str | None = Query(
+        default="verified",
+        description=(
+            "حالة التحقق من السجل. "
+            "القيمة الافتراضية verified."
+        ),
+    ),
 ) -> dict:
     """
     إرجاع سلسلة الاتجاهات الشهرية.
